@@ -239,7 +239,6 @@ def ask(question: str, rag_chain):
     print("=" * 60)
     return answer
 
-
 if __name__ == "__main__":
     input_path = Path(os.environ.get("INPUT_PDF"))
     output_path = Path(os.environ.get("OUTPUT_MD"))
@@ -275,6 +274,3 @@ if __name__ == "__main__":
     )
 
     ask(rag_chain)
-
-    
-    
