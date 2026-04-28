@@ -1,0 +1,13 @@
+numpy
+pymupdf
+pymupdf4llm
+sentence-transformers
+faiss-cpu
+accelerate
+bitsandbytes
+torch
+transformers
+langchain-core
+langchain-community
+langchain-huggingface
+langchain-text-splitters

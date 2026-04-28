@@ -6,21 +6,20 @@ from pathlib import Path
 import os
 import numpy as np
 from functools import partial
+import json
+import sys
+import argparse
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, pipeline, MarianMTModel, MarianTokenizer
 from langchain_core.documents import Document
 
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.messages import HumanMessage, AIMessage
 from langchain_huggingface import HuggingFacePipeline, HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter, TokenTextSplitter
-from transformers import GenerationConfig
 
-import pymupdf.layout
 import pymupdf4llm 
 
 input_path = [
@@ -83,57 +82,6 @@ def _to_markdown_table(rows: list[list[str]]) -> str:
     return "\n".join(md_lines)
 
 
-# def document_to_markdown(input_path: Path, output_path: Path, name: str, translator=None) -> None:
-#     doc = pymupdf.open(input_path)
-#     with open(output_path / name, "w", encoding="utf-8", newline="\n") as out:
-#         for page in doc:
-#             blocks = page.get_text("blocks")
-#             table_finder = page.pymupdf_layout()
-#             tables = table_finder.tables if table_finder else []
-
-#             elements = []
-
-#             for block in blocks:
-#                 x0, y0, x1, y1, text, *_ = block
-#                 block_rect = pymupdf.Rect(x0, y0, x1, y1)
-#                 if any(_is_mostly_inside(block_rect, t.bbox) for t in tables):
-#                     continue
-#                 if text and text.strip():
-#                     # Prevedi besedilo če je prevajalnik na voljo
-#                     if translator:
-#                         text = translator(text.strip())
-
-#                     if text.startswith("UČNI NAČRT PREDMETA / COURSE SYLLABUS") or \
-#                        text.startswith("Course syllabus"):  # po prevodu
-#                         elements.append((y0, x0, "text", "\n\n\n" + f"{70 * '-'}" + "\n" + text.rstrip()))
-#                     else:
-#                         elements.append((y0, x0, "text", text.rstrip()))
-
-#             for t in tables:
-#                 rows = t.extract() or []
-#                 # Prevedi celice v tabeli
-#                 if translator:
-#                     rows = [
-#                         [translator(cell) if cell and cell.strip() else cell for cell in row]
-#                         for row in rows
-#                     ]
-#                 md_table = _to_markdown_table(rows)
-#                 if md_table:
-#                     x0, y0, *_ = t.bbox
-#                     elements.append((y0, x0, "table", md_table))
-
-#             elements.sort(key=lambda e: (e[0], e[1]))
-
-#             for _, _, kind, content in elements:
-#                 out.write(content)
-#                 out.write("\n\n" if kind == "table" else "\n")
-
-#             out.write("\f")
-
-#     doc.close()
-#     print("saved to markdown.")
-
-
 def document_to_markdown(input_path: Path, output_path: Path, name: str) -> None:
     doc = pymupdf.open(input_path)
     
@@ -157,20 +105,21 @@ def load_markdown_documents(folder: str) -> list[Document]:
         )
     return docs
 
-def embed_documents():
+def embed_documents(source_dir: str, vectorstore_dir: str):
     EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-    all_docs = load_markdown_documents(output_path) #load_markdown_documents(os.environ.get("DOCUMENTS"))
+    all_docs = load_markdown_documents(source_dir)
+
+    if not all_docs:
+        raise ValueError(f"No PDF documents found in: {source_dir}")
 
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=800,          # Target size in characters
-        chunk_overlap=100,       # 100-char overlap between consecutive chunks
+        chunk_size=1000,          # Target size in characters
+        chunk_overlap=150,       # 100-char overlap between consecutive chunks
         length_function=len,
         add_start_index=True,    # Store the original char offset in metadata
     )
 
-    # chunks = text_splitter.split_documents(all_docs)
-
-    chunks = split_by_course(all_docs)
+    chunks = text_splitter.split_documents(all_docs)
 
     print(f"Documents → chunks: {len(all_docs)} → {len(chunks)}")
     print(f"Average chunk size : {sum(len(c.page_content) for c in chunks) / len(chunks):.0f} chars")
@@ -188,6 +137,11 @@ def embed_documents():
     vectorstore = FAISS.from_documents(chunks, embeddings)
     print("Done.")
     print(f"Index size: {vectorstore.index.ntotal} vectors of dimension {vectorstore.index.d}")
+
+    vectorstore_path = Path(vectorstore_dir)
+    vectorstore_path.parent.mkdir(parents=True, exist_ok=True)
+    vectorstore.save_local(vectorstore_dir)
+    print(f"Saved vectorstore to: {vectorstore_dir}")
 
     return vectorstore
 
@@ -210,153 +164,31 @@ def get_retriever(vectorstore, search_type="similarity"):
     
     return retriever
 
-def split_by_course(docs: list[Document]) -> list[Document]:
-    """Razdeli dokument na manjše smiselne kose."""
-    chunks = []
-    
-    for doc in docs:
-        # Najprej razdeli po straneh (form feed \f)
-        pages = doc.page_content.split('\f')
-        
-        for page_num, page in enumerate(pages):
-            if not page.strip():
-                continue
-                
-            # Vsako stran razdeli na odstavke/sekcije
-            sections = page.split('\n\n')
-            
-            current_chunk = ""
-            for section in sections:
-                # Če dodajanje sekcije preseže mejo, shrani trenutni chunk
-                if len(current_chunk) + len(section) > 2000:  # 2000 znakov ≈ 500 tokenov
-                    if current_chunk:
-                        chunks.append(Document(
-                            page_content=current_chunk.strip(),
-                            metadata={
-                                "source": doc.metadata["source"],
-                                "page": page_num,
-                                "chunk_id": len(chunks)
-                            }
-                        ))
-                    current_chunk = section
-                else:
-                    if current_chunk:
-                        current_chunk += "\n\n" + section
-                    else:
-                        current_chunk = section
-            
-            # Zadnji chunk
-            if current_chunk:
-                chunks.append(Document(
-                    page_content=current_chunk.strip(),
-                    metadata={
-                        "source": doc.metadata["source"],
-                        "page": page_num,
-                        "chunk_id": len(chunks)
-                    }
-                ))
-    
-    return chunks
+def load_model(model_name):
+    MODEL_NAME = model_name
 
-def get_relevant_chunks(vectorstore, search_type="similarity"):
-    # query = "What subject has a lot to do with embedded systems?"
-    query = "Kateri predmeti obravnavajo vgrajene sisteme?"
-    retriever = get_retriever(vectorstore, search_type)
-    sim_results = retriever.invoke(query)
-
-    print("=== Similarity Search Results ===")
-    for i, doc in enumerate(sim_results):
-        title = doc.metadata.get("title", "unknown")
-        print(f"[{i+1}] Source: {title}")
-        print(doc.page_content[:200])
-        print()
-
-    return sim_results
-
-### THIS FUNCTION IS USED WHEN ACTUALLY RUNNING ###
-# def load_model():
-#     MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
-
-#     bnb_config = BitsAndBytesConfig(
-#         load_in_4bit=True,
-#         bnb_4bit_quant_type="nf4",          # NormalFloat4 — optimal for bell-curve weight distributions
-#         bnb_4bit_use_double_quant=True,     # Quantise the quantisation constants too (saves ~0.4 bits/param)
-#         bnb_4bit_compute_dtype=torch.bfloat16,  # Use bfloat16 for matrix multiplications
-#     )
-
-#     print("Loading model...")
-#     model = AutoModelForCausalLM.from_pretrained(
-#         MODEL_NAME,
-#         quantization_config=bnb_config,
-#         device_map="auto",          # Automatically distribute across available GPUs
-#         trust_remote_code=True,
-#     )
-#     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
-#     tokenizer.pad_token = tokenizer.eos_token
-#     tokenizer.padding_side = "left"   # Left padding for inference: generated tokens follow the last real token, not padding tokens
-#     print("Model loaded.")
-
-#     return model, tokenizer
-
-### THIS FUNCTION IS FOR TESTING ###
-def load_model():
-    # Use the smallest instruct model that works with your chat template
-    MODEL_NAME = "HuggingFaceTB/SmolLM2-135M-Instruct"
-
-    print("Loading tiny model on CPU (just for pipeline test)...")
-    model = AutoModelForCausalLM.from_pretrained(
-        MODEL_NAME,
-        dtype=torch.float32,   # CPU only works with float32
-        device_map="cpu",            # Force CPU – no GPU needed
-        low_cpu_mem_usage=True,
-    )
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-    tokenizer.pad_token = tokenizer.eos_token
-    tokenizer.padding_side = "left"
-    return model, tokenizer
-
-### THIS FUNCTION IS FOR EXSPERIMENTIG ###
-def load_real_model():
-    MODEL_NAME = "microsoft/Phi-3-mini-4k-instruct"
-    
-    print("Loading Phi-3-mini...")
-    
-    # Dodajte BitsAndBytes konfiguracijo TUKAJ, preden jo uporabite
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
-        bnb_4bit_compute_dtype=torch.float16,
-        bnb_4bit_use_double_quant=True,
-        bnb_4bit_quant_type="nf4"
+        bnb_4bit_quant_type="nf4",          # NormalFloat4 — optimal for bell-curve weight distributions
+        bnb_4bit_use_double_quant=True,     # Quantise the quantisation constants too (saves ~0.4 bits/param)
+        bnb_4bit_compute_dtype=torch.bfloat16,  # Use bfloat16 for matrix multiplications
     )
-    
-    if torch.cuda.is_available():
-        model = AutoModelForCausalLM.from_pretrained(
-            MODEL_NAME,
-            quantization_config=bnb_config,  # Zdaj je definiran
-            device_map="auto",
-            trust_remote_code=True,
-        )
-    else:
-        model = AutoModelForCausalLM.from_pretrained(
-            MODEL_NAME,
-            quantization_config=bnb_config,  # Zdaj je definiran
-            dtype=torch.float32,
-            device_map="cpu",
-            low_cpu_mem_usage=True,
-        )
-    
+
+    print("Loading model...")
+    model = AutoModelForCausalLM.from_pretrained(
+        MODEL_NAME,
+        quantization_config=bnb_config,
+        device_map="auto",          # Automatically distribute across available GPUs
+        trust_remote_code=True,
+    )
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
     tokenizer.pad_token = tokenizer.eos_token
-    tokenizer.padding_side = "left"
-    
+    tokenizer.padding_side = "left"   # Left padding for inference: generated tokens follow the last real token, not padding tokens
+    print("Model loaded.")
+
     return model, tokenizer
 
 def make_rag_prompt(inputs: dict, tokenizer) -> str:
-
-    # context = inputs['context']
-    # if len(context) > 3000:  # Če je predolg
-    #     context = context[:3000] + "... [context truncated]"
-
     system = (
         "You are an academic advisor assistant for the University of Ljubljana, "
         "Faculty of Computer Science. You have access to course syllabi.\n"
@@ -396,52 +228,107 @@ def preprocess_query(text: str) -> str:
     expanded = [SHORTCUTS.get(w.lower(), w) for w in words]
     return " ".join(expanded)
 
-if __name__ == "__main__":
+def load_conversation_from_file(filepath: str) -> tuple[list[dict], str]:
+    """
+    Load conversation history and current query from JSON file.
+    File format:
+    {
+        "history": [
+            {"question": "...", "answer": "..."},
+            {"question": "...", "answer": "..."}
+        ],
+    }
+    Returns: history list
+    """
+    with open(filepath, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data.get("history", [])
 
-    # for pdf in input_path:
-    #     name = pdf.stem + ".md"
-    #     document_to_markdown(pdf, output_path, name)
+def save_conversation_to_file(filepath: str, history: list[dict], current_query: str = None, answer: str = None) -> None:
+    """Save only the conversation `history` to JSON file.
+
+    The function keeps the original signature for compatibility but writes
+    a JSON object with a single key `history` which is a list of Q/A pairs.
+    """
+    output = {"history": history}
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+
+def process_query_with_history(question: str, rag_chain, history: list[dict]) -> str:
+    """Process a single query with conversation history."""
+    # Preprocess the question
+    question = preprocess_query(question)
+    print(f"[Vprašanje]: {question}")
+    
+    # Get answer from LLM with full history
+    answer = ask(question, rag_chain, history)
+    print(f"\n Odgovor: {answer}")
+    
+    return answer
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description="Process a conversation query with RAG pipeline",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "input_file",
+        help="Path to input JSON file with conversation history"
+    )
+    parser.add_argument(
+        "--documents-dir",
+        default="..",
+        help="Directory to scan recursively for PDF documents when building the index"
+    )
+    parser.add_argument(
+        "--vectorstore-dir",
+        default="../vectorstore/faiss_index",
+        help="Directory where the FAISS index is saved and loaded from"
+    )
+    parser.add_argument(
+        "--build-index",
+        action="store_true",
+        help="Rebuild the vectorstore from --documents-dir before answering",
+        default=False
+    )
+
+    return parser.parse_args()
+
+if __name__ == "__main__":
+    # To run the program all arguments must be provided in the command line first!!!
+    args = parse_arguments()
 
     embeddings = HuggingFaceEmbeddings(
             model_name="sentence-transformers/all-MiniLM-L6-v2",
             model_kwargs={"device": "cuda" if torch.cuda.is_available() else "cpu"},
         )
-    vectorstore = FAISS.load_local(
-            "../vectorstore/faiss_index",
-            embeddings,
-            allow_dangerous_deserialization=True
-        )
-    # vectorstore = embed_documents()
-    # vectorstore.save_local("../vectorstore/faiss_index")
+    
+    if args.build_index:
+        print(f"Building vectorstore from documents in: {args.documents_dir}")
+        vectorstore = embed_documents(args.documents_dir, args.vectorstore_dir)
+    else:
+        vectorstore = FAISS.load_local(
+                args.vectorstore_dir,
+                embeddings,
+                allow_dangerous_deserialization=True
+            )
 
 
     retriever = get_retriever(vectorstore, search_type="mmr")
     # results = get_relevant_chunks(vectorstore) # This is to test retrieval
-    model, tokenizer = load_model()
+    model, tokenizer = load_model("meta-llama/Meta-Llama-3-8B-Instruct")
     eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
 
-    ### THIS IS THE ACTUAL PIPELINE ###
-    # hf_pipeline = pipeline(
-    #     task="text-generation",
-    #     model=model,
-    #     tokenizer=tokenizer,
-    #     return_full_text=False,
-    #     max_new_tokens=2048,   
-    #     do_sample=False,
-    #     repetition_penalty=1.1,
-    #     pad_token_id=tokenizer.eos_token_id,
-    #     eos_token_id=[tokenizer.eos_token_id, eot_token_id]
-    # )
     hf_pipeline = pipeline(
         task="text-generation",
         model=model,
         tokenizer=tokenizer,
         return_full_text=False,
-        # Ne mešajte generation_config s parametri
-        # Uporabite samo parametre ali pa generation_config, ne obojega
-        max_new_tokens=512,
-        do_sample=True,
-        temperature=0.7,
+        max_new_tokens=2048,   
+        do_sample=False,
+        repetition_penalty=1.1,
+        pad_token_id=tokenizer.eos_token_id,
+        eos_token_id=[tokenizer.eos_token_id, eot_token_id]
     )
 
     llm = HuggingFacePipeline(pipeline=hf_pipeline)
@@ -459,37 +346,17 @@ if __name__ == "__main__":
     | StrOutputParser()
 )
 
-    #ask("Vgrajeni sistemi", rag_chain)
+    input_file = args.input_file
+    output_file = args.input_file
+    
+    print(f"Loading conversation from: {input_file}")
+    chat_history = load_conversation_from_file(input_file)
+    
+    query = "Tell me that name of two courses that deal with embedded systems."
 
-
-    chat_history: list[dict] = []   
-    MAX_HISTORY = 10
-
-    while True:
-        try:
-            question = input("\n Vprašanje: ").strip()
-
-            if not question:
-                continue
-
-            # 1. Prevedi vprašanje SL -> EN
-            question = preprocess_query(question)
-            print(f"[Vprašanje]: {question}")
-
-            # 2. Pošlji angleško vprašanje modelu
-            answer = ask(question, rag_chain, chat_history)
-
-            # 3. Prevedi odgovor EN -> SL
-            print(f"\n💬 Odgovor: {answer}")
-
-            # 4. V zgodovino shrani angleške verzije (model pričakuje angleščino)
-            chat_history.append({"question": question, "answer": answer})
-            if len(chat_history) > MAX_HISTORY:
-                chat_history = chat_history[-MAX_HISTORY:]
-
-        except KeyboardInterrupt:
-            print("\n\n👋 Nasvidenje!")
-            break
-        except Exception as e:
-            print(f"\n❌ Prišlo je do napake: {e}")
-            print("Poskusite znova z drugim vprašanjem.")
+    answer = process_query_with_history(query, rag_chain, chat_history)
+    
+    chat_history.append({"question": query, "answer": answer})
+    
+    save_conversation_to_file(output_file, chat_history, query, answer)
+    print(f"\nConversation saved to: {output_file}")

@@ -1,0 +1,28 @@
+{
+  "history": [
+    {
+      "question": "Katere predmete poučujejo v prvem letniku?",
+      "answer": "V prvem letniku se študenti spoznajo z osnovami računalništva, matematike in splošnih računalniških principov."
+    },
+    {
+      "question": "Koliko ECTS kreditov imam potrebnih?",
+      "answer": "Univerzitetni program zahteva 180 ECTS kreditov, visokošolski strokovni program pa 210 ECTS kreditov."
+    },
+    {
+      "question": "Tell me what courses deal with embedded systems.",
+      "answer": "Based on the provided context, it seems that the following courses deal with embedded systems:\n\n* \"Embedded Systems\" (ECTS credits: unknown, Semester: unknown)\n\t+ This course aims to present students of computer science the basic approaches in the design of embedded systems, to present the actual building blocks of embedded systems (microcontrollers, memory and I/O devices), software development tools and operating systems for embedded devices and their properties.\n\nNote that there might be other courses that also cover embedded systems, but this one specifically mentions it as a focus area."
+    },
+    {
+      "question": "Tell me what courses deal with embedded systems.",
+      "answer": "Based on the provided context, the following courses seem to deal with embedded systems:\n\n* \"Embedded Systems\" (ECTS credits: unknown, Semester: unknown)\n* \"Computer Architecture\" (ECTS credits: unknown, Semester: unknown)\n\t+ This course introduces students to the organization of computers and digital circuits, focusing on RISC architectures and the ARMv7 instruction set architecture.\n* \"Artificial Intelligence and Machine Perception\" (ECTS credits: unknown, Semester: unknown)\n\t+ Although not exclusively focused on embedded systems, this course may touch upon topics related to embedded systems, such as robotics and real-time systems.\n\nPlease note that the availability and details of these courses may vary depending on the university and faculty."
+    },
+    {
+      "question": "Tell me that name of two courses that deal with embedded systems.",
+      "answer": "According to the provided context, the two courses that deal with embedded systems are:\n\n1. \"Embedded Systems\"\n2. None mentioned explicitly, but possibly \"Designing Embedded Systems with PIC Microcontrollers\" (mentioned as a reference book)"
+    },
+    {
+      "question": "Tell me that name of two courses that deal with embedded systems.",
+      "answer": "According to the provided context, the two courses that deal with embedded systems are:\n\n1. \"Embedded Systems\"\n2. \"Designing Embedded Systems with PIC Microcontrollers\""
+    }
+  ]
+}
