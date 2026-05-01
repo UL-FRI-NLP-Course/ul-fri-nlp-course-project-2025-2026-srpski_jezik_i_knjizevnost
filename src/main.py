@@ -4,6 +4,7 @@ warnings.filterwarnings("ignore")
 import pymupdf
 from pathlib import Path
 import os
+import re
 import numpy as np
 from functools import partial
 import json
@@ -145,17 +146,24 @@ def embed_documents(source_dir: str, vectorstore_dir: str):
 
     return vectorstore
 
-def get_retriever(vectorstore, search_type="similarity"):
+def get_retriever(vectorstore, context_size, search_type="similarity"):
+    if context_size is None:
+        size_fac = 1
+    else:
+        size_fac = context_size
+
+    retrieve_num = size_fac * 6
+
     if search_type == "similarity":
         # --- Similarity search ---
         retriever = vectorstore.as_retriever(
             search_type="similarity",
-            search_kwargs={"k": 4},
+            search_kwargs={"k": retrieve_num},
         )
     elif search_type == "mmr":
         retriever = vectorstore.as_retriever(
             search_type="mmr",
-            search_kwargs={"k": 6, "fetch_k": 30, "lambda_mult": 0.6},
+            search_kwargs={"k": retrieve_num, "fetch_k": 30 + retrieve_num, "lambda_mult": 0.6},
             # fetch_k: initial candidate pool size (larger = better diversity quality)
             # lambda_mult: relevance weight (0.5 = equal balance)
         )
@@ -266,6 +274,71 @@ def process_query_with_history(question: str, rag_chain, history: list[dict]) ->
     
     return answer
 
+def extract_chunk_number(model, tokenizer, input_query):
+    """Ask the local Hugging Face model for a relevant chunk count.
+
+    The model is instructed to return only a single integer or the word
+    "None". The output is then normalized with a small standard-library parser
+    so the function always returns an int-compatible value on Python 3.9.
+    """
+    with open("../examples/examples.md", "r", encoding="utf-8") as f:
+        examples_string = f.read()
+
+    system_message = (
+        "You extract only numerical information that changes how much context a model needs. "
+        "Return an integer only when the user explicitly asks for a count, quantity, or number of items to retrieve. "
+        "Ignore incidental digits such as academic year, semester, age, dates, IDs, or class year. "
+        "If the number is part of background information and not a request for how many items to answer with, return None. "
+        "If the query is asking about a certain number of courses, then ALWAYS return that number. "
+        "Do not explain your answer.\n\n"
+        f"EXAMPLES:\n{examples_string}"
+    )
+    user_message = (
+        "Query: "
+        f"{input_query}\n\n"
+        "Return exactly one token: an integer like 3, or None."
+    )
+
+    messages = [
+        {"role": "system", "content": system_message},
+        {"role": "user", "content": user_message},
+    ]
+
+    prompt = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True,
+    )
+
+    model_inputs = tokenizer(prompt, return_tensors="pt")
+    model_inputs = {key: value.to(model.device) for key, value in model_inputs.items()}
+    
+    pad_token_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
+    eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
+    eos_token_ids = [tokenizer.eos_token_id, eot_token_id]
+
+    with torch.no_grad():
+        generated_ids = model.generate(
+            **model_inputs,
+            max_new_tokens=8,
+            do_sample=False,
+            temperature=0.0,
+            pad_token_id=pad_token_id,
+            eos_token_id=eos_token_ids,
+        )
+
+    new_tokens = generated_ids[0][model_inputs["input_ids"].shape[-1]:]
+    raw_answer = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+
+    if raw_answer.lower().startswith("none"):
+        return None
+
+    match = re.search(r"-?\d+", raw_answer)
+    if match is not None:
+        return int(match.group(0))
+
+    return None
+
 def parse_arguments():
     parser = argparse.ArgumentParser(
         description="Process a conversation query with RAG pipeline",
@@ -313,11 +386,15 @@ if __name__ == "__main__":
                 allow_dangerous_deserialization=True
             )
 
-
-    retriever = get_retriever(vectorstore, search_type="mmr")
-    # results = get_relevant_chunks(vectorstore) # This is to test retrieval
     model, tokenizer = load_model("meta-llama/Meta-Llama-3-8B-Instruct")
     eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
+        
+    query = "Tell me that name of two courses that deal with embedded systems."
+    context_size = extract_chunk_number(model, tokenizer, query)
+
+    retriever = get_retriever(vectorstore, context_size, search_type="mmr")
+    # results = get_relevant_chunks(vectorstore) # This is to test retrieval
+
 
     hf_pipeline = pipeline(
         task="text-generation",
@@ -352,7 +429,7 @@ if __name__ == "__main__":
     print(f"Loading conversation from: {input_file}")
     chat_history = load_conversation_from_file(input_file)
     
-    query = "Tell me that name of two courses that deal with embedded systems."
+
 
     answer = process_query_with_history(query, rag_chain, chat_history)
     
