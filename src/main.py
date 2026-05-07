@@ -253,11 +253,6 @@ def load_conversation_from_file(filepath: str) -> tuple[list[dict], str]:
     return data.get("history", [])
 
 def save_conversation_to_file(filepath: str, history: list[dict], current_query: str = None, answer: str = None) -> None:
-    """Save only the conversation `history` to JSON file.
-
-    The function keeps the original signature for compatibility but writes
-    a JSON object with a single key `history` which is a list of Q/A pairs.
-    """
     output = {"history": history}
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
@@ -275,12 +270,6 @@ def process_query_with_history(question: str, rag_chain, history: list[dict]) ->
     return answer
 
 def extract_chunk_number(model, tokenizer, input_query):
-    """Ask the local Hugging Face model for a relevant chunk count.
-
-    The model is instructed to return only a single integer or the word
-    "None". The output is then normalized with a small standard-library parser
-    so the function always returns an int-compatible value on Python 3.9.
-    """
     with open("../examples/examples.md", "r", encoding="utf-8") as f:
         examples_string = f.read()
 
@@ -395,7 +384,6 @@ if __name__ == "__main__":
     retriever = get_retriever(vectorstore, context_size, search_type="mmr")
     # results = get_relevant_chunks(vectorstore) # This is to test retrieval
 
-
     hf_pipeline = pipeline(
         task="text-generation",
         model=model,
@@ -428,8 +416,6 @@ if __name__ == "__main__":
     
     print(f"Loading conversation from: {input_file}")
     chat_history = load_conversation_from_file(input_file)
-    
-
 
     answer = process_query_with_history(query, rag_chain, chat_history)
     
