@@ -11,3 +11,6 @@ langchain-core
 langchain-community
 langchain-huggingface
 langchain-text-splitters
+requests
+beautifulsoup4
+smolagents
