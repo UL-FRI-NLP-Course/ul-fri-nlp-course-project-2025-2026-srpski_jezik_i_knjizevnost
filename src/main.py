@@ -62,22 +62,6 @@ def register_tool(name: str, description: str):
 # ─────────────────────────────────────────────
 
 @register_tool(
-    name="rag_search",
-    description=(
-        "Search the course syllabi knowledge base. Use this for questions about "
-        "courses, ECTS credits, semesters, professors, course content, prerequisites, "
-        "or any academic programme information."
-    ),
-)
-def rag_search_tool(query: str, rag_chain=None, history: list = None, **kwargs) -> str:
-    """Run a RAG lookup against the FAISS vectorstore."""
-    if rag_chain is None:
-        return "RAG chain not initialised."
-    history = history or []
-    return ask(query, rag_chain, history)
-
-
-@register_tool(
     name="timetable",
     description=(
         "Query the live timetable / schedule system. Use this for questions about "
@@ -124,24 +108,25 @@ def build_tool_description_block() -> str:
     return "\n".join(lines)
 
 
-def route_query(query: str, model, tokenizer) -> str:
+def route_query(query: str, rag_context: str, model, tokenizer) -> str:
     """
-    Ask the LLM which tool to use for the given query.
-    Returns the tool name string (e.g. 'rag_search').
-    Concept 1: The LLM autonomously decides which tool is appropriate.
+    Ask the LLM which additional tool to use given a query and RAG context.
+    Returns the tool name string (e.g. 'timetable' or 'direct_answer').
+    Concept 1: The LLM autonomously decides which additional tool is appropriate.
     """
     tool_block = build_tool_description_block()
     tool_names = [t["name"] for t in TOOL_REGISTRY]
 
     system = (
-        "You are a query router. Given a user question, decide which tool should handle it.\n\n"
+        "You are a query router. Given a user question and retrieved course context, "
+        "decide if an additional tool is needed.\n\n"
         f"{tool_block}\n\n"
         f"Respond with ONLY the tool name, one of: {tool_names}. "
         "No explanation, no punctuation — just the tool name."
     )
     messages = [
         {"role": "system", "content": system},
-        {"role": "user", "content": query},
+        {"role": "user", "content": f"Question: {query}\n\nRetrieved context:\n{rag_context[:1000]}"},
     ]
     prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
@@ -162,11 +147,11 @@ def route_query(query: str, model, tokenizer) -> str:
     new_tokens = generated[0][inputs["input_ids"].shape[-1]:]
     decision = tokenizer.decode(new_tokens, skip_special_tokens=True).strip().lower()
 
-    # Match decision to a known tool name (fallback: rag_search)
+    # Match decision to a known tool name (fallback: direct_answer)
     for name in tool_names:
         if name in decision:
             return name
-    return "rag_search"
+    return "direct_answer"
 
 
 # ─────────────────────────────────────────────
@@ -181,10 +166,12 @@ def run_agent(
     timetable_agent,
     llm,
     history: list,
-    max_steps: int = 3,
+    max_steps: int = 2,
 ) -> str:
+    """
+    Agent pipeline: always enrich with RAG, then optionally call additional tools.
+    """
     tool_kwargs = {
-        "rag_chain": rag_chain,
         "timetable_agent": timetable_agent,
         "llm": llm,
         "tokenizer": tokenizer,
@@ -193,71 +180,30 @@ def run_agent(
 
     tool_map = {t["name"]: t["fn"] for t in TOOL_REGISTRY}
 
-    gathered_context: list[str] = []
-    steps_taken: list[str] = []
+    # STEP 1: Always retrieve RAG context
+    print("[Agent step 1] → RAG retrieval")
+    rag_result = ask(query, rag_chain, history)
+    gathered_context = [f"[rag_context]: {rag_result}"]
 
-    for step in range(1, max_steps + 1):
-        routing_query = query
-        if gathered_context:
-            prior = "\n\n".join(gathered_context)
-            routing_query = (
-                f"Original question: {query}\n\n"
-                f"Information gathered so far:\n{prior}\n\n"
-                "Is this sufficient? If not, which tool should be called next?"
-            )
-
-        chosen_tool = route_query(routing_query, model, tokenizer)
-        print(f"[Agent step {step}] → tool: {chosen_tool}")
-        steps_taken.append(chosen_tool)
+    # STEP 2: Decide if additional tools are needed
+    for step in range(2, max_steps + 1):
+        chosen_tool = route_query(query, rag_result, model, tokenizer)
+        print(f"[Agent step {step}] → additional tool: {chosen_tool}")
+        
+        if chosen_tool == "direct_answer":
+            # We have enough context from RAG, no additional tool needed
+            break
 
         fn = tool_map[chosen_tool]
         result = fn(query, **tool_kwargs)
         gathered_context.append(f"[{chosen_tool}]: {result}")
 
-        # Early-exit: if direct_answer was chosen or we have enough context
-        if chosen_tool == "direct_answer" or _result_is_sufficient(result, model, tokenizer, query):
-            break
-
-    # Synthesise final answer from all gathered context
+    # STEP 3: Synthesise final answer from all gathered context
     if len(gathered_context) == 1:
+        # Only RAG context, return as-is
         return gathered_context[0].split("]:", 1)[-1].strip()
 
     return _synthesise(query, gathered_context, model, tokenizer, history)
-
-
-def _result_is_sufficient(result: str, model, tokenizer, query: str) -> bool:
-    """
-    Quick LLM check: is the retrieved result enough to answer the query?
-    Returns True → stop the loop.  False → keep going.
-    """
-    system = (
-        "You are a quality checker. Given a user question and a retrieved result, "
-        "decide if the result fully answers the question.\n"
-        "Reply with exactly one word: YES or NO."
-    )
-    messages = [
-        {"role": "system", "content": system},
-        {"role": "user", "content": f"Question: {query}\n\nResult: {result[:800]}"},
-    ]
-    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-
-    eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    inputs = tokenizer(prompt, return_tensors="pt")
-    inputs = {k: v.to(model.device) for k, v in inputs.items()}
-
-    with torch.no_grad():
-        generated = model.generate(
-            **inputs,
-            max_new_tokens=4,
-            do_sample=False,
-            temperature=0.0,
-            pad_token_id=tokenizer.pad_token_id or tokenizer.eos_token_id,
-            eos_token_id=[tokenizer.eos_token_id, eot_token_id],
-        )
-
-    new_tokens = generated[0][inputs["input_ids"].shape[-1]:]
-    verdict = tokenizer.decode(new_tokens, skip_special_tokens=True).strip().upper()
-    return verdict.startswith("YES")
 
 
 def _synthesise(query: str, context_parts: list[str], model, tokenizer, history: list) -> str:
@@ -555,6 +501,7 @@ def parse_arguments():
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("input_file", help="Path to input JSON file with conversation history")
+    parser.add_argument("--models-dir", default="/d/hpc/projects/onj_fri/srpski_jezik_i_knjizevnost", help="Directory where models are stored")
     parser.add_argument("--documents-dir", default="..", help="Directory to scan for documents when building the index")
     parser.add_argument("--vectorstore-dir", default="../vectorstore/faiss_index", help="FAISS index directory")
     parser.add_argument("--build-index", action="store_true", default=False, help="Rebuild vectorstore before answering")
@@ -585,7 +532,7 @@ if __name__ == "__main__":
 
     model, tokenizer = load_model(
         "meta-llama/Meta-Llama-3-8B-Instruct",
-        "/d/hpc/projects/onj_fri/srpski_jezik_i_knjizevnost"
+        args.models_dir
     )
     eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
 
