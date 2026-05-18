@@ -1,7 +1,9 @@
 from __future__ import annotations
 
-import torch
-from smolagents import ToolCallingAgent, tool, FinalAnswerTool
+from langchain_core.tools import tool
+from langchain.agents import initialize_agent, AgentType
+from langchain_huggingface import HuggingFacePipeline
+from transformers import pipeline
 from schedule import fetch_timetable, Course, Session
 
 print("Loading timetable...")
@@ -148,7 +150,6 @@ TIMETABLE_TOOLS = [
     check_overlap,
     courses_on_day,
     courses_by_degree,
-    FinalAnswerTool(),
 ]
 
 AGENT_SYSTEM_PROMPT = (
@@ -158,57 +159,58 @@ AGENT_SYSTEM_PROMPT = (
 )
 
 
-def build_timetable_agent(model, tokenizer) -> ToolCallingAgent:
-    import smolagents
-
-    class LocalTransformersModel(smolagents.models.Model):
-        def __init__(self, model, tokenizer):
-            super().__init__()
-            self._model = model
-            self._tokenizer = tokenizer
-
-        def generate(self, messages, stop_sequences=None, **kwargs):
-            from smolagents.models import ChatMessage
-            prompt = self._tokenizer.apply_chat_template(
-                messages, tokenize=False, add_generation_prompt=True
-            )
-            inputs = self._tokenizer(prompt, return_tensors="pt")
-            inputs = {k: v.to(self._model.device) for k, v in inputs.items()}
-            eot_id = self._tokenizer.convert_tokens_to_ids("<|eot_id|>")
-            with torch.no_grad():
-                out = self._model.generate(
-                    **inputs,
-                    max_new_tokens=512,
-                    do_sample=False,
-                    pad_token_id=self._tokenizer.eos_token_id,
-                    eos_token_id=[self._tokenizer.eos_token_id, eot_id],
-                )
-            new_tokens = out[0][inputs["input_ids"].shape[-1]:]
-            text = self._tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
-            return ChatMessage(role="assistant", content=text)
-
-    local_model = LocalTransformersModel(model, tokenizer)
-    return ToolCallingAgent(
-        tools=TIMETABLE_TOOLS,
-        model=local_model,
-        max_steps=4,
-        verbosity_level=1,
+def build_timetable_agent(model, tokenizer):
+    """
+    Build a LangChain agent for timetable queries using REACT agent type.
+    Works with local HuggingFace models that don't support bind_tools().
+    
+    Args:
+        model: The loaded transformer model
+        tokenizer: The corresponding tokenizer
+    
+    Returns:
+        An agent executor instance ready to process queries
+    """
+    # Create the pipeline and LangChain LLM wrapper
+    hf_pipeline = pipeline(
+        task="text-generation",
+        model=model,
+        tokenizer=tokenizer,
+        max_new_tokens=512,
+        do_sample=False,
+        return_full_text=False,
     )
+    llm = HuggingFacePipeline(pipeline=hf_pipeline)
+    
+    # Use initialize_agent with STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION
+    # This works with local models and doesn't require single-input tools
+    agent_executor = initialize_agent(
+        tools=TIMETABLE_TOOLS,
+        llm=llm,
+        agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION,
+        verbose=True,
+        max_iterations=4,
+        handle_parsing_errors=True,
+    )
+    
+    return agent_executor
 
 
-def ask_timetable_agent(question: str, agent: ToolCallingAgent) -> str:
+def ask_timetable_agent(question: str, agent_executor) -> str:
     """
     Ask the timetable agent a question and return its answer as a string.
     This is the main entry point to call from main.py.
 
     Args:
         question: Natural language question about the timetable.
-        agent:    Agent built with build_timetable_agent().
+        agent_executor: Agent executor built with build_timetable_agent().
 
     Returns:
         String answer from the agent.
     """
-    return str(agent.run(AGENT_SYSTEM_PROMPT + "\n\nUser question: " + question))
+    result = agent_executor.invoke({"input": question})
+    return result.get("output", "")
+
 
 
 # def _standalone_test():

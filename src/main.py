@@ -183,15 +183,6 @@ def run_agent(
     history: list,
     max_steps: int = 3,
 ) -> str:
-    """
-    Agentic loop:
-      1. Router picks a tool.
-      2. Tool executes and returns a result.
-      3. LLM checks if the result is sufficient; if not, it can pick another tool.
-      4. Repeat up to max_steps, then synthesise a final answer.
-
-    Concept 2: Complex queries are broken into sub-tasks across multiple steps.
-    """
     tool_kwargs = {
         "rag_chain": rag_chain,
         "timetable_agent": timetable_agent,
@@ -200,15 +191,12 @@ def run_agent(
         "history": history,
     }
 
-    # Map tool names → callables (Concept 3: Tool-Based Architecture)
     tool_map = {t["name"]: t["fn"] for t in TOOL_REGISTRY}
 
     gathered_context: list[str] = []
     steps_taken: list[str] = []
 
     for step in range(1, max_steps + 1):
-        # Build a routing query that includes prior context so the LLM
-        # can decide if another tool is needed.
         routing_query = query
         if gathered_context:
             prior = "\n\n".join(gathered_context)
@@ -440,15 +428,20 @@ def get_retriever(vectorstore, context_size, search_type="similarity"):
 #     print("Model loaded.")
 #     return model, tokenizer
 
-def load_model(model_name):
+def load_model(model_name, cache_dir):
     print("Loading model...")
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         torch_dtype=torch.float16,
         device_map="auto",
         trust_remote_code=True,
+        cache_dir=cache_dir
     )
-    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_name,
+        trust_remote_code=True,
+        cache_dir=cache_dir
+    )
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "left"
     print("Model loaded.")
@@ -590,16 +583,16 @@ if __name__ == "__main__":
             allow_dangerous_deserialization=True,
         )
 
-    model, tokenizer = load_model("meta-llama/Meta-Llama-3-8B-Instruct")
+    model, tokenizer = load_model(
+        "meta-llama/Meta-Llama-3-8B-Instruct",
+        "/d/hpc/projects/onj_fri/srpski_jezik_i_knjizevnost"
+    )
     eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
 
-    # Build timetable agent (Concept 3 – existing pipeline wrapped as a tool)
     timetable_agent = build_timetable_agent(model, tokenizer)
 
-    # Build RAG chain (also a tool in the registry)
-    query = "Do APS2 and AAHRP overlap?"
-    # query = "Katere predmete poučujejo v prvem letniku?"
-    # query = "Give me the labs on Monday for uni."
+    query = "Tell me some courses where I can learn about embebbed-systems."
+
     context_size = extract_chunk_number(model, tokenizer, query)
     retriever = get_retriever(vectorstore, context_size, search_type="mmr")
 
@@ -637,7 +630,6 @@ if __name__ == "__main__":
     query = preprocess_query(query)
     print(f"[Vprašanje]: {query}")
 
-    # ── Run the agentic loop (replaces the old if/else router) ──
     answer = run_agent(
         query=query,
         model=model,
