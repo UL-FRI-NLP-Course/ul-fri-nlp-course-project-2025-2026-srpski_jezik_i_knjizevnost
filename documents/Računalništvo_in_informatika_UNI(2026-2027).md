@@ -1,4 +1,4 @@
-## ALGORITMI IN PODATKOVNE STRUKTURE 1 
+###### ALGORITMI IN PODATKOVNE STRUKTURE 1 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -149,7 +149,7 @@ Lectures, tutorials, homeworks,. The emphasis is on continuous study and on auto
 
 - Hočevar, T., & Demšar, J. (2014). A combinatorial approach to graphlet counting. _Bioinformatics_ , _30_ (4), 559-565 
 
-## ALGORITMI IN PODATKOVNE STRUKTURE 2 
+###### ALGORITMI IN PODATKOVNE STRUKTURE 2 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -373,7 +373,7 @@ Lectures, assignments with written and oral demonstrations and presentations, se
 
 Celotna bibliografija je dostopna na SICRISu https://cris.cobiss.net/ecris/si/sl/researcher/8741 Complete bibliography is available in SICRIS: https://cris.cobiss.net/ecris/si/en/researcher/8741 
 
-## ANGLEŠKI JEZIK NIVO A 
+###### ANGLEŠKI JEZIK NIVO A 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -476,7 +476,7 @@ _najpomembnejših psiholoških načel za poučevanje in učenje od vrtca do sred
 
 Celotna bibliografija je dostopna na COBISSu: http://izumbib.izum.si/bibliografije/Y20170313105702-A142909539.html 
 
-## ANGLEŠKI JEZIK NIVO B 
+###### ANGLEŠKI JEZIK NIVO B 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -554,7 +554,7 @@ _najpomembnejših psiholoških načel za poučevanje in učenje od vrtca do sred
 
 Celotna bibliografija je dostopna na COBISSu: http://izumbib.izum.si/bibliografije/Y20170313105702-A142909539.html 
 
-## ANGLEŠKI JEZIK NIVO C 
+###### ANGLEŠKI JEZIK NIVO C 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -667,7 +667,7 @@ _najpomembnejših psiholoških načel za poučevanje in učenje od vrtca do sred
 
 Celotna bibliografija je dostopna na COBISSu: http://izumbib.izum.si/bibliografije/Y20170313105702-A142909539.html 
 
-## ARHITEKTURA RAČUNALNIŠKIH SISTEMOV 
+###### ARHITEKTURA RAČUNALNIŠKIH SISTEMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -793,7 +793,7 @@ Andrej Dobnikar, Branko Šter: Structural properties of recurrent neural network
 
 Jernej Zupanc, Damjana Drobne, Branko Šter: Markov random field model for segmenting large populations of lipid vesicles from micrographs. _Journal of liposome research_ , 21(4): 315-323, 2011. 
 
-## BREZŽIČNA IN MOBILNA OMREŽJA 
+###### BREZŽIČNA IN MOBILNA OMREŽJA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -931,7 +931,7 @@ Spoznavanje in razumevanje uglašenosti med teorijo in njeno aplikacijo na konkr
 
 VASYLCHENKOVA, Anastasiia, MRAZ, Miha, ZIMIC, Nikolaj, MOŠKON, Miha. Classical mechanics approach applied to analysis of genetic oscillators. IEEE/ACM transactions on computational biology and bioinformatics, ISSN 1545-5963. [Print ed.], May/Jun. 2017, vol. 14, no. 3, str. 721-727, BORDON, Jure, MOŠKON, Miha, ZIMIC, Nikolaj, MRAZ, Miha. Fuzzy logic as a computational tool for quantitative modelling of biological systems with uncertain kinetic data. IEEE/ACM transactions on computational biology and bioinformatics, ISSN 1545-5963. [Print ed.], 2015, vol. 12, no. 5, str. 1199-120 PETRONI, Mattia, ZIMIC, Nikolaj, MRAZ, Miha, MOŠKON, Miha. Stochastic simulation algorithm for gene regulatory networks with multiple binding sites. Journal of computational biology, ISSN 1066-5277. [Print ed.], Mar. 2015, vol. 22, no. 3, str. 218-226, ŠOBERL, Domen, ZIMIC, Nikolaj, LEONARDIS, Aleš, KRIVIC, Jaka, MOŠKON, Miha. Hardware implementation of FAST algorithm for mobile applications. Journal of signal processing systems for signal, image, and video technology, ISSN 1939-8018. [Print ed.], 2015, vol. 79, no. 3, str. 247-256, PEČAR, Primož, MRAZ, Miha, ZIMIC, Nikolaj, JANEŽ, Miha, LEBAR BAJEC, Iztok. Solving the ternary quantum-dot cellular automata logic gate problem by means of adiabatic switching. _Japanese journal of applied physics_ , ISSN 0021-4922, 2008, vol. 47, no. 6, str. 5000-5006 
 
-## DIGITALNO NAČRTOVANJE 
+###### DIGITALNO NAČRTOVANJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1019,7 +1019,7 @@ Predavanja, laboratorijske vaje na katerih se Lectures, a series of lab assignme
 
 Celotna bibliografija doc. dr. Ratka Pilipovića je dostopna na SICRISu: https://cris.cobiss.net/ecris/si/sl/researcher/53015 
 
-## DIPLOMSKI SEMINAR 
+###### DIPLOMSKI SEMINAR 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1150,7 +1150,7 @@ Cilj predmeta je izdelava diplomskega dela, zaključne naloge na študijskem pro
 
 [3] Ž. Emeršič, B. Meden, P. Peer, and V. Štruc, “Evaluation and analysis of ear recognition models: Performance, complexity and resource requirements,” Neural Comput. Appl., vol. 32, no. 20, pp. 15785– 15800, Oct. 2020, doi: 10.1007/s00521-018-3530-1. [4] Ž. Emeršič, D. Štepec, V. Štruc, and P. Peer, “Training convolutional neural networks with limited training data for ear recognition in the wild,” in Proc. 12th IEEE Int. Conf. Autom. Face Gesture Recognit. (FG), Washington, DC, USA, May/Jun. 2017, pp. 897–994, doi: 10.1109/FG.2017.123. [5] Ž. Emeršič et al., “The unconstrained ear recognition challenge,” in Proc. IEEE Int. Joint Conf. Biometrics (IJCB), Denver, CO, USA, Oct. 2017, pp. 715–724, doi: 10.1109/BTAS.2017.8272761. Celotna bibliografija je dostopna na SICRISu: https://cris.cobiss.net/ecris/si/sl/researcher/50289. 
 
-## DISKRETNE STRUKTURE 
+###### DISKRETNE STRUKTURE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1300,7 +1300,7 @@ Po uspešnem zaključku tega predmeta bo študent: After the completion of the c
 
 5. FIJAVŽ, Gašper, NAKAMOTO, Atsuhiro. Odd complete minors in even embeddings on surfaces. Discrete Mathematics, ISSN 0012-365X. [Print ed.], 2016, vol. 339, iss. 1, str. 165-178. Celotna bibliografija je dostopna na SICRISu: http://www.sicris.si/search/rsr.aspx?lang=slv&id=9390. 
 
-## EKONOMIKA IN PODJETNIŠTVO 
+###### EKONOMIKA IN PODJETNIŠTVO 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1448,7 +1448,7 @@ LEVSTEK, Aleš, HOVELJA, Tomaž, PUCIHAR, Andreja. IT governance mechanisms and 
 
 https://cris.cobiss.net/ecris/si/sl/researcher/34132 (za izr. prof. dr. Tomaž Hovelja) 
 
-## ELEKTRONSKO POSLOVANJE 
+###### ELEKTRONSKO POSLOVANJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1626,7 +1626,7 @@ Po opravljenem predmetu bo študent:
 
 Celotna bibliografija je dostopna na SICRISu: The whole bibliography can be obtained at the below URL: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=7226 
 
-## FIZIKA 
+###### FIZIKA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1758,7 +1758,7 @@ AAD, G., CINDRO, Vladimir, FILIPČIČ, Andrej, GORIŠEK, Andrej, KERŠEVAN, Boru
 
 AD, G., CINDRO, Vladimir, DOLENC, Irena, FILIPČIČ, Andrej, FRATINA, Saša, GORIŠEK, Andrej, KERŠEVAN, Borut Paul, KRAMBERGER, Gregor, MAČEK, Boštjan, MANDIĆ, Igor (pisar), MIJOVIĆ, Liza, MIKUŽ, Marko, TYKHONOV, Andrii, et al., ATLAS Collaboration. Search for the Standard Model Higgs boson in the diphoton decay channel with 4.9fb−14.9fb−1 of pppp collision data at √s=7s=7 TeV with ATLAS. _Physical review letters_ , ISSN 0031-9007. [Print ed.], 2012, vol. 108, no. 11, str. 111803-1-111803-19, doi: 10.1103/PhysRevLett.108.111803. [COBISS.SI-ID 25702695], [JCR, SNIP, WoSdo 22. 1. 2017: št. citatov (TC): 161, čistih citatov (CI): 157, Scopus do 25. 6. 2017: št. citatov (TC): 119, čistih citatov (CI): 118] Vsi podatki so dostopni na COBISS: http://www.sicris.si/search/rsr.aspx?lang=slv&id=10492 
 
-## INTELIGENTNI SISTEMI 
+###### INTELIGENTNI SISTEMI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2010,7 +2010,7 @@ Po uspešnem zaključku tega predmeta bo študent: After the completion of the c
 
 **Reference nosilca/Lecturer's references:** 
 
-## IZRAČUNLJIVOST IN RAČUNSKA ZAHTEVNOST 
+###### IZRAČUNLJIVOST IN RAČUNSKA ZAHTEVNOST 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2041,7 +2041,7 @@ Po uspešnem zaključku tega predmeta bo študent: After the completion of the c
 
 ## **Vsebina:** 
 
-## Matematični uvod 
+#### Matematični uvod 
 
 V prvem delu se bomo posvetili matematičnim osnovam, ki so ključne za razumevanje kompleksnosti. Obravnavali bomo: 
 
@@ -2218,7 +2218,7 @@ Lectures and exercise groups, homework assignemnts. Frequent homework assignemts
 
 6. ČIBEJ, Uroš, FÜRST, Luka, MIHELIČ, Jurij. A symmetry-breaking node equivalence for pruning the search space in backtracking algorithms. Symmetry. 2019 
 
-## KOMUNIKACIJSKI PROTOKOLI 
+###### KOMUNIKACIJSKI PROTOKOLI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2352,7 +2352,7 @@ PORENTA, Jernej, CIGLARIČ, Mojca. Comparing commercial IP reputation databases 
 
 ŠKOBERNE, Nejc, CIGLARIČ, Mojca. Practical evaluation of stateful NAT64/DNS64 translation. Advances in electrical and computer engineering, ISSN 1582-7445. [Print ed.], 2011, vol. 11, no. 3, pp. 49-54. PANČUR, Matjaž, CIGLARIČ, Mojca. Impact of test-driven development on productivity, code and tests: a controlled experiment. Information and software technology, ISSN 0950-5849. [Print ed.], Jun. 2011, vol. 53, no. 6, pp. 557-573. CIGLARIČ, Mojca. Effective message routing in unstructured peer-to-peer overlays. IEE proc., Commun. [Print ed.], October 2005, vol. 152, no. 5, str. 673-678. Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=8265. 
 
-## LINEARNA ALGEBRA 
+###### LINEARNA ALGEBRA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2466,7 +2466,7 @@ Cilj predmeta je študenta seznaniti z metodami The course aims to acquaint stud
 
 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=6758 
 
-## MATEMATIČNO MODELIRANJE 
+###### MATEMATIČNO MODELIRANJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2612,7 +2612,7 @@ Lectures, lab exercises and homework problems and projects. Special attention wi
 
 - Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=20092 
 
-## MODELIRANJE RAČUNALNIŠKIH OMREŽIJ 
+###### MODELIRANJE RAČUNALNIŠKIH OMREŽIJ 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2750,7 +2750,7 @@ Predavanja/Lectures: Slovenščina Vaje/Tutorial: Slovenščina
 
 - Celotna bibliografija je dostopna na SICRISu. 
 
-## MODULSKI IZBIRNI PREDMET 1/4 
+###### MODULSKI IZBIRNI PREDMET 1/4 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2780,7 +2780,7 @@ Predavanja/Lectures: Slovenščina Vaje/Tutorial: Slovenščina
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## MODULSKI IZBIRNI PREDMET 2/4 
+###### MODULSKI IZBIRNI PREDMET 2/4 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2810,7 +2810,7 @@ Predavanja/Lectures: Slovenščina Vaje/Tutorial: Slovenščina
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## MODULSKI IZBIRNI PREDMET 3/4 
+###### MODULSKI IZBIRNI PREDMET 3/4 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2840,7 +2840,7 @@ Predavanja/Lectures: Slovenščina Vaje/Tutorial: Slovenščina
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## MODULSKI IZBIRNI PREDMET 4/4 
+###### MODULSKI IZBIRNI PREDMET 4/4 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2870,7 +2870,7 @@ Predavanja/Lectures: Slovenščina Vaje/Tutorial: Slovenščina
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## MULTIMEDIJSKI SISTEMI 
+###### MULTIMEDIJSKI SISTEMI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3029,7 +3029,7 @@ KRISTAN, Matej, MATAS, Jiří, LEONARDIS, Aleš, VOJÍŘ, Tomáš, PFLUGFELDER, 
 
 KRISTAN, Matej, LEONARDIS, Aleš. Online discriminative kernel density estimator with Gaussian kernels. _IEEE transactions on cybernetics_ , vol. 44, (3), 2014, str. [355-365], [COBISS.SI-ID 9907284] ČEHOVIN, Luka, KRISTAN, Matej, LEONARDIS, Aleš. Robust visual tracking using an adaptive coupledlayer visual model. _IEEE trans. pattern anal. mach. intell._ . [Print ed.], 2012, str. [1-14], [COBISS.SI-ID 9431124] Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=32801. 
 
-## OPERACIJSKI SISTEMI 
+###### OPERACIJSKI SISTEMI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3179,7 +3179,7 @@ Celotna bibliografija je dostopna na SICRISu:
 
 http://sicris.izum.si/search/rsr.aspx?lang=slv&id=15487. 
 
-## ORGANIZACIJA IN MANAGEMENT 
+###### ORGANIZACIJA IN MANAGEMENT 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3288,7 +3288,7 @@ HOVELJA, Tomaž, VASILECAS, Olegas, KALIBATIENE, Diana, RUPNIK, Rok. Evaluating 
 
 LEVSTEK, Aleš, HOVELJA, Tomaž, PUCIHAR, Andreja. IT governance mechanisms and contingency factors : towards an adaptive it governance model. Organizacija : revija za management, informatiko in kadre, ISSN 1318-5454. [Tiskana izd.], nov. 2018, vol. 51, no. 4, str. 286-310. 
 
-## ORGANIZACIJA RAČUNALNIŠKIH SISTEMOV 
+###### ORGANIZACIJA RAČUNALNIŠKIH SISTEMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3374,7 +3374,7 @@ BULIĆ, Patricio, GUŠTIN, Veselko, ŠONC, Damjan, ŠTRANCAR, Andrej. An FPGA-ba
 
 BULIĆ, Patricio, DOBRAVEC, Tomaž. An approximate method for filtering out data dependencies with a sufficiently large distance between memory references. _J. supercomput._ , 2011, vol. 56, no. 2, str. 226-244 BABIĆ, Zdenka, AVRAMOVIĆ, Aleksej, BULIĆ, Patricio. An iterative logarithmic multiplier. _Microprocess. microsyst._ . , 2011, vol. 35, no. 1, str. 23-33 Celotna bibliografija izr. prof. Patricia Bulića je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=11542. 
 
-## OSNOVE DIGITALNIH VEZIJ 
+###### OSNOVE DIGITALNIH VEZIJ 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3514,7 +3514,7 @@ BORDON, Jure, MOŠKON, Miha, ZIMIC, Nikolaj, MRAZ, Miha. Fuzzy logic as a comput
 
 PEČAR, Primož, MRAZ, Miha, ZIMIC, Nikolaj, JANEŽ, Miha, LEBAR BAJEC, Iztok. Solving the ternary quantum-dot cellular automata logic gate problem by means of adiabatic switching. _Japanese journal of applied physics_ , ISSN 0021-4922, 2008, vol. 47, no. 6, str. 5000-5006 
 
-## OSNOVE INFORMACIJSKIH SISTEMOV 
+###### OSNOVE INFORMACIJSKIH SISTEMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3677,7 +3677,7 @@ Predavanja, laboratorijske vaje, domače naloge. Lectures, laboratory exercises 
 
 - Celotna bibliografija je na voljo na SICRIS / Complete bibliography is available at SICRIS: https://bib.cobiss.net/biblioweb/biblio/si/slv/cris/25526. 
 
-## OSNOVE MATEMATIČNE ANALIZE 
+###### OSNOVE MATEMATIČNE ANALIZE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3804,7 +3804,7 @@ Predavanja, računske vaje z ustnimi nastopi, domače Lectures, lab exercises wi
 
 - Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=20092 
 
-## OSNOVE OBLIKOVANJA 
+###### OSNOVE OBLIKOVANJA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3953,7 +3953,7 @@ http://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=2391&context=clcweb. [COB
 
 Celotna bibliografija je dostopna na SICRISu: http://www.sicris.si/search/rsr.aspx?lang=slv&id=33966. 
 
-## OSNOVE PODATKOVNIH BAZ 
+###### OSNOVE PODATKOVNIH BAZ 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4117,7 +4117,7 @@ FIALA, Dalibor, ŠUBELJ, Lovro, ŽITNIK, Slavko, BAJEC, Marko. Do PageRank-based
 
 ŠUBELJ, Lovro, FIALA, Dalibor, BAJEC, Marko. Network-based statistical comparison of citation topology of bibliographic databases. _Scientific reports_ , ISSN 2045-2322, 2014, 4, str. 1-10 
 
-## OSNOVE UMETNE INTELIGENCE 
+###### OSNOVE UMETNE INTELIGENCE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4228,7 +4228,7 @@ Po uspešnem zaključku predmeta bo študent: After the completion of the course
 
 Celotna bibliografija je dostopna na SICRISu / For complete bibliography see SICRIS: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=31318. 
 
-## PLANIRANJE IN UPRAVLJANJE INFORMATIKE 
+###### PLANIRANJE IN UPRAVLJANJE INFORMATIKE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4383,7 +4383,7 @@ Lectures, laboratory exercises and seminars. Laboratory exercises and seminars a
 
 Glavni avtor strateških planov informatike za vsrto večjih slovenskih podjetij: SŽ, Elektro Celja, Elektro Ljubljana, ELES, Plinovodi, Dravske elektrnarne Maribor. 
 
-## PORAZDELJENI SISTEMI 
+###### PORAZDELJENI SISTEMI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4493,7 +4493,7 @@ Lectures, laboratories, homework
 
 5. PILIPOVIĆ, Ratko, RISOJEVIĆ, Vladimir, BOŽIČ, Janko, BULIĆ, Patricio, LOTRIČ, Uroš. An approximate GEMM unit for energy-efficient object detection. Sensors. Jun. 2021, vol. 21, 1-19 Celotna bibliografija je dostopna na SICRIS: https://bib.cobiss.net/biblioweb/biblio/si/slv/cris/16109 
 
-## POSTOPKI RAZVOJA PROGRAMSKE OPREME 
+###### POSTOPKI RAZVOJA PROGRAMSKE OPREME 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4686,7 +4686,7 @@ WS-BPEL 2.0 for SOA Composite Applications with IBM WebSphere 7: define, model, 
 
 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=10545. 
 
-## PREVAJALNIKI 
+###### PREVAJALNIKI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4789,7 +4789,7 @@ SLIVNIK, Boštjan. On different LL and LR parsers used in LLLR parsing. Computer
 
 SLIVNIK, Boštjan. Measuring the complexity of domain-specific languages developed using MDD. Software quality journal, ISSN 0963-9314, Sep. 2016, vol. 24, no. 3, str. 737-753. SLIVNIK, Boštjan. LL conflict resolution using the embedded left LR parser. Computer Science and Information Systems, 2012, vol. 9, no. 3, str. 1105-1124. POTOČNIK, Matic, ČIBEJ, Uroš, SLIVNIK, Boštjan. Linter - a tool for finding bugs and potential problems in Scala code. Proceedings of the 29th Annual ACM Symposium on Applied Computing, Gyeongju, Korea, March 24-28, 2014, str. 1615-1616. SLIVNIK, Boštjan. LLLR parsing. V: Proceedings of the 28th annual ACM Symposium on Applied Computing, Coimbra, Portugal, March 18-22, 2013, Association for Computing Machinery, str. 1698-1699. SLIVNIK, Boštjan, VILFAN, Boštjan. Producing the left parse during bottom-up parsing. Information processing letters. [Print ed.], Dec. 2005, vol. 96, no. 6, str. 220-224. Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=7849. 
 
-## PRINCIPI PROGRAMSKIH JEZIKOV 
+###### PRINCIPI PROGRAMSKIH JEZIKOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4898,7 +4898,7 @@ BAUER, Andrej, STONE, Christopher A. RZ: a tool for bringing constructive and co
 
 BAUER, Andrej, HÖTZEL ESCARDÓ, Martín, SIMPSON, Alex. Comparing functional paradigms for exact real-number computation. V: WIDMAYER, Peter (ur.). Automata, languages and programming : 29th international colloquium, ICALP 2002, Málaga, Spain, July 8-13, 2002 : proceedings, (Lecture notes in computer science, ISSN 0302-9743, 2380). Berlin; London: Springer, cop. 2002, str. 488-500. 
 
-## PROGRAMIRANJE 1 
+###### PROGRAMIRANJE 1 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4995,7 +4995,7 @@ FÜRST, Luka, MERNIK, Marjan, MAHNIČ, Viljan. Improving the graph grammar parse
 
 FÜRST, Luka, MERNIK, Marjan, MAHNIČ, Viljan. Converting metamodels to graph grammars: doing without advanced graph grammar features. Software and systems modeling, 2015, vol. 14, no. 3, str. 12971317. FÜRST, Luka, ČIBEJ, Uroš, MIHELIČ, Jurij. Maximum exploratory equivalence in trees. FedCSIS 2015, Łódź, Poljska, september 2015, str. 507-518. FÜRST, Luka, MAHNIČ, Viljan. Introductory programming course: motivating students with prior knowledge. _World transactions on engineering and technology education_ , ISSN 1446-2257, 2013, vol. 11, no. 4, str. 400405. http://wiete.com.au/journals/WTE&TE/Pages/Vol.11, %20No.4%20(2013)/08-Fuerst-L.pdf. MAHNIČ, Viljan, FÜRST, Luka, ROŽANC, Igor _. Java skozi primere_ . Šenčur: Bi-tim, 2008. XIV, 478 str., ponovni ponatis 2012. Celotna bibliografija je dostopna na Cobissu oziroma Sicrisu: http://bib.cobiss.si/cobiss/BibPersonal.jsp?init=t&code=25527 
 
-## PROGRAMIRANJE 2 
+###### PROGRAMIRANJE 2 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5054,7 +5054,7 @@ ROŽANC, Igor, SLIVNIK, Boštjan. Using reverse engineering to construct the pla
 
 POTOČNIK, Matic, ČIBEJ, Uroš, SLIVNIK, Boštjan. Linter - a tool for finding bugs and potential problems in Scala code. Proceedings of the 29th Annual ACM Symposium on Applied Computing, Gyeongju, Korea, March 24-28, 2014, str. 1615-1616. Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=7849. 
 
-## PROGRAMIRANJE SPECIFIČNIH PLATFORM 
+###### PROGRAMIRANJE SPECIFIČNIH PLATFORM 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5214,7 +5214,7 @@ Predavanja in domača naloge. Poseben poudarek je Lectures and homework with spe
 
 Celotna bibliografija je dostopna na SICRISu: http://www.sicris.si/search/rsr.aspx?opt=1&lang=slv&id=43813. 
 
-## RAČUNALNIŠKA GRAFIKA IN TEHNOLOGIJA IGER 
+###### RAČUNALNIŠKA GRAFIKA IN TEHNOLOGIJA IGER 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5376,7 +5376,7 @@ Predavanja s praktičnimi demonstracijami, izvajanje Lectures with practical dem
 
 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=8948. 
 
-## RAČUNALNIŠKE KOMUNIKACIJE 
+###### RAČUNALNIŠKE KOMUNIKACIJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5560,7 +5560,7 @@ Način (pisni izpit ali ustno izpraševanje, Type (examination, oral, coursework
 
 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=31318 
 
-## RAČUNALNIŠKE TEHNOLOGIJE 
+###### RAČUNALNIŠKE TEHNOLOGIJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5683,7 +5683,7 @@ R. Žitko et al., Ground state of the parallel double quantum dot system, Phys. 
 
 Celotna bibliografija je dostopna na SICRISu: http://splet02.izum.si/cobiss/bibliography?langbib=slv&li=si&homelang=svn&code=23567 
 
-## RAČUNALNIŠTVO V PRAKSI I 
+#### RAČUNALNIŠTVO V PRAKSI I 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5815,7 +5815,7 @@ KNEZ, Timotej, BAJEC, Marko, ŽITNIK, Slavko. ANGLEr : a next-generation natural
 
 _information science : 16th International Conference, RCIS 2022, Barcelona, Spain, May 17-20, 2022 : proceedings_ . Cham: Springer, cop. 2022. Str. 761-768, ilustr. Lecture notes in business information processing (Internet), 446. ISBN 978-3-031-05760-1. ISSN 1865-1356. https://link.springer.com/chapter/10.1007/978-3-031-057601_53, DOI: 10.1007/978-3-031-05760-1_53. [COBISS.SI-ID 108466947], [SNIP, WoS, Scopus] 
 
-## RAČUNALNIŠTVO V PRAKSI II 
+###### RAČUNALNIŠTVO V PRAKSI II 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5939,7 +5939,7 @@ KNEZ, Timotej, BAJEC, Marko, ŽITNIK, Slavko. ANGLEr : a next-generation natural
 
 Springer, cop. 2022. Str. 761-768, ilustr. Lecture notes in business information processing (Internet), 446. ISBN 978-3-031-05760-1. ISSN 1865-1356. https://link.springer.com/chapter/10.1007/978-3-031-057601_53, DOI: 10.1007/978-3-031-05760-1_53. [COBISS.SI-ID 108466947], [SNIP, WoS, Scopus] 
 
-## RAZVOJ INFORMACIJSKIH SISTEMOV 
+###### RAZVOJ INFORMACIJSKIH SISTEMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6127,7 +6127,7 @@ Predavanja, računske vaje z ustnimi nastopi, projektni Lectures, exercises, pro
 
 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=9270. 
 
-## RAZVOJ INTELIGENTNIH SISTEMOV 
+###### RAZVOJ INTELIGENTNIH SISTEMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6274,7 +6274,7 @@ Uršič P, Tabernik D, Boben M, Skočaj D, Leonardis A, Kristan M (2013) Room ca
 
 JL Wyatt, Aydemir A, Brenner M, Hanheide M, Hawes N, Jensfelt P, Kristan M, Kruijff G-J M, Lison P, Pronobis A, Sjöö K, Vrečko A, Zender H, Zillich M, Skočaj D (2010) Self-understanding and self-extension: a systems and representational approach. IEEE Trans Auton Ment Dev 2(4): 282-303. Celotna bibliografija izr. prof. dr. Skočaja je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=10425. 
 
-## SISTEMSKA PROGRAMSKA OPREMA 
+###### SISTEMSKA PROGRAMSKA OPREMA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6389,7 +6389,7 @@ BULIĆ, Patricio, DOBRAVEC, Tomaž. An approximate method for filtering out data
 
 DOBRAVEC, Tomaž, ROBIČ, Borut. Restricted shortest paths in 2-circulant graphs. _Comput. commun._ . [Print ed.], March 2009, vol. 32, no. 4, str. 685-690 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=10416. 
 
-## SPLETNO PROGRAMIRANJE 
+###### SPLETNO PROGRAMIRANJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6588,7 +6588,7 @@ Laboratory project: programming of distributed full stack web application, divid
 
 Celotna bibliografija je dostopna na SICRIS  / Complete bibliography is available at SICRIS: https://bib.cobiss.net/biblioweb/biblio/si/slv/cris/25526. 
 
-## SPLOŠNO IZBIRNI PREDMET 
+###### SPLOŠNO IZBIRNI PREDMET 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6620,7 +6620,7 @@ Celotna bibliografija je dostopna na SICRIS  / Complete bibliography is availabl
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## STROKOVNO IZBIRNI PREDMET 
+#### STROKOVNO IZBIRNI PREDMET 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6652,7 +6652,7 @@ Celotna bibliografija je dostopna na SICRIS  / Complete bibliography is availabl
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## STROKOVNO IZBIRNI PREDMET (MODULI + SEZNAM) 
+###### STROKOVNO IZBIRNI PREDMET (MODULI + SEZNAM) 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6682,7 +6682,7 @@ Celotna bibliografija je dostopna na SICRIS  / Complete bibliography is availabl
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## STROKOVNO IZBIRNI PREDMET (SEZNAM) 
+###### STROKOVNO IZBIRNI PREDMET (SEZNAM) 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6712,7 +6712,7 @@ Celotna bibliografija je dostopna na SICRIS  / Complete bibliography is availabl
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## TEHNIČNE VEŠČINE 
+###### TEHNIČNE VEŠČINE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6822,7 +6822,7 @@ https://www.sciencedirect.com/science/article/pii/S0166218X23000434?via%3Dihub, 
 
 **5.** ČIBEJ, Uroš, FÜRST, Luka, MIHELIČ, Jurij. A symmetry-breaking node equivalence for pruning the search space in backtracking algorithms. _Symmetry_ . Oct. 2019, vol. 11, no. 10, str. 1-26, ilustr. ISSN 2073-8994. https://www.mdpi.com/2073-8994/11/10/1300, https://repozitorij.uni-lj.si/IzpisGradiva.php?id=133142, DOI: 10.3390/sym11101300. [COBISS.SI-ID 1538408387], [JCR, SNIP, WoS do 12. 2. 2023: št. citatov (TC): 3, čistih citatov (CI): 3, čistih citatov na avtorja (CIAu): 1,00, Scopus do 16. 1. 2023: št. citatov (TC): 4, čistih citatov (CI): 3, čistih citatov na avtorja (CIAu): 1,00] 
 
-## TEHNOLOGIJA PROGRAMSKE OPREME 
+###### TEHNOLOGIJA PROGRAMSKE OPREME 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7074,7 +7074,7 @@ After the compeltion of the course a student will be able to:
 
 Celotna bibliografija je dostopna na SICRIS / Complete bibliography is available at SICRIS: https://bib.cobiss.net/biblioweb/biblio/si/slv/cris/25526. 
 
-## TEHNOLOGIJA UPRAVLJANJA PODATKOV 
+###### TEHNOLOGIJA UPRAVLJANJA PODATKOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7271,7 +7271,7 @@ Lectures, homework and project work with explicit focus on simultaneous studies 
 
 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=8453. 
 
-## TEORIJA INFORMACIJ IN SISTEMOV 
+###### TEORIJA INFORMACIJ IN SISTEMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7379,7 +7379,7 @@ Lectures and exercises are focused on understanding of the theory and procedures
 
 5. LOTRIČ, Uroš, PILIPOVIĆ, Ratko, BULIĆ, Patricio. A hybrid radix-4 and approximate logarithmic multiplier for energy efficient image processing. Electronics. May 2021, vol. 10, 1-20  Celotna bibliografija je dostopna na SICRIS: https://bib.cobiss.net/biblioweb/biblio/si/slv/cris/16109 
 
-## UMETNO ZAZNAVANJE 
+###### UMETNO ZAZNAVANJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7601,7 +7601,7 @@ KRISTAN, Matej, MATAS, Jiří, LEONARDIS, Aleš, VOJÍŘ, Tomáš, PFLUGFELDER, 
 
 URŠIČ, Peter, LEONARDIS, Aleš, SKOČAJ, Danijel, KRISTAN, Matej. Learning part-based spatial models for laser-vision-based room categorization. _The international journal of robotics research_ , ISSN 0278-3649, 2017, vol. 36, no. 4, str. 379-402, [COBISS.SI-ID 1537424323] ČEHOVIN, Luka, KRISTAN, Matej, LEONARDIS, Aleš. Robust visual tracking using an adaptive coupledlayer visual model. _IEEE trans. pattern anal. mach. intell._ . [Print ed.], 2012, str. [1-14], [COBISS.SI-ID 9431124] Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=32801. 
 
-## UVOD V ODKRIVANJE ZNANJ IZ PODATKOV 
+###### UVOD V ODKRIVANJE ZNANJ IZ PODATKOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7780,7 +7780,7 @@ Zitnik M, Zupan B (2015) Data fusion by matrix factorization. _IEEE Transactions
 
 Celotna bibliografija prof. dr. Zupana je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=7764 
 
-## VERJETNOST IN STATISTIKA 
+###### VERJETNOST IN STATISTIKA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7945,7 +7945,7 @@ A. Jurišić and J. Koolen, Classification of the family AT4( _qs,q,q_ ) of anti
 
 A. Jurišić, A. Munemasa and J. Tagami, On graphs with complete multipartite mu-graphs, _Discrete Mathematics_ **310** (2010), 1812–1819. Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=6518. 
 
-ZANESLJIVOST IN ZMOGLJIVOST RAČUNALNIŠKIH SISTEMOV 
+###### ZANESLJIVOST IN ZMOGLJIVOST RAČUNALNIŠKIH SISTEMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 

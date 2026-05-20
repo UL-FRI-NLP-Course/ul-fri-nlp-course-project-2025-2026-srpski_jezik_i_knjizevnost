@@ -1,4 +1,4 @@
-## ALGORITMI IN PODATKOVNE STRUKTURE 1 
+###### ALGORITMI IN PODATKOVNE STRUKTURE 1 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -144,7 +144,7 @@ Predavanja s pomočjo prosojnic in table. Vaje deloma Lectures using slides and 
 
 5. MIHELIČ, Jurij, ROBIČ, Borut. Solving the k-center problem efficiently with a dominating set algorithm. Journal of Computing and Information Technology, 2005, vol. 13, no. 3, str. 225-233 
 
-## ALGORITMI IN PODATKOVNE STRUKTURE 2 
+###### ALGORITMI IN PODATKOVNE STRUKTURE 2 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -228,7 +228,7 @@ BULIĆ, Patricio, DOBRAVEC, Tomaž. An approximate method for filtering out data
 
 DOBRAVEC, Tomaž, ROBIČ, Borut. Restricted shortest paths in 2-circulant graphs. Computer communications. [Print ed.]. March 2009, vol. 32, no. 4, str. 685-690, ilustr. ISSN 0140-3664. [COBISS.SI-ID 6966356 
 
-## ANGLEŠKI JEZIK – NIVO A 
+###### ANGLEŠKI JEZIK – NIVO A 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -335,7 +335,7 @@ _najpomembnejših psiholoških načel za poučevanje in učenje od vrtca do sred
 
 Celotna bibliografija je dostopna na COBISSu: http://izumbib.izum.si/bibliografije/Y20170313105702-A142909539.html 
 
-## ANGLEŠKI JEZIK – NIVO B 
+###### ANGLEŠKI JEZIK – NIVO B 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -454,7 +454,7 @@ _najpomembnejših psiholoških načel za poučevanje in učenje od vrtca do sred
 
 Celotna bibliografija je dostopna na COBISSu: http://izumbib.izum.si/bibliografije/Y20170313105702-A142909539.html 
 
-## ANGLEŠKI JEZIK – NIVO C 
+###### ANGLEŠKI JEZIK – NIVO C 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -597,7 +597,7 @@ Clear and effective oral and written communication and raising self-confidence w
 
 Celotna bibliografija je dostopna na COBISSu: http://izumbib.izum.si/bibliografije/Y20170313105702-A142909539.html 
 
-## ČLOVEŠKI VIDIKI VARNOSTI 
+###### ČLOVEŠKI VIDIKI VARNOSTI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -761,7 +761,7 @@ Predavanja, praktične vaje in demonstracije, projektni Lectures, lab work, home
 
 **Modic, David in Anderson, Ross. (2014).** Reading This May Harm Your Computer: The Psychology of Malware Warnings. _Computers in Human Behavior, 41_ , 71-79. doi: 10.1016/j.chb.2014.09.014 
 
-## DELOVNA PRAKSA 
+###### DELOVNA PRAKSA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -791,7 +791,7 @@ Predavanja, praktične vaje in demonstracije, projektni Lectures, lab work, home
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## DIGITALNA VEZJA 
+###### DIGITALNA VEZJA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -860,7 +860,7 @@ Celotna bibliografija je dostopna na naslovu
 
 https://bib.cobiss.net/bibliographies/si/webBiblio/bib201_20220614_173808_a110484579.html 
 
-## DIGITALNO PROCESIRANJE SIGNALOV 
+###### DIGITALNO PROCESIRANJE SIGNALOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -989,7 +989,7 @@ ROZMAN, Robert. Enostavnejša zasnova sistema za razpoznavanje govora. Elektrote
 
 ROZMAN, Robert. "CSLU Toolkit": napredne govorne tehnologije za nekomercialno uporabo tudi v slovenskem jeziku. V: RAJKOVIČ, Vladislav (ur.), URBANČIČ, Tanja (ur.), BERNIK, Mojca (ur.). _Vzgoja in izobraževanje v informacijski družbi_ . Kranj: Moderna organizacija, 2000. Str. 572-576. Organizacija, Letn. 33, 2000, št. 8. ISSN 1318-5454. [COBISS.SI-ID 2905107] Celotna bibliografija je dostopna na SICRISu: https://cris.cobiss.net/ecris/si/sl/researcher/8611 
 
-## DIPLOMSKI SEMINAR 
+###### DIPLOMSKI SEMINAR 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1110,7 +1110,7 @@ Cilj predmeta je izdelava diplomskega dela, zaključne naloge na študijskem pro
 
 [3] Ž. Emeršič, B. Meden, P. Peer, and V. Štruc, “Evaluation and analysis of ear recognition models: Performance, complexity and resource requirements,” Neural Comput. Appl., vol. 32, no. 20, pp. 15785– 15800, Oct. 2020, doi: 10.1007/s00521-018-3530-1. [4] Ž. Emeršič, D. Štepec, V. Štruc, and P. Peer, “Training convolutional neural networks with limited training data for ear recognition in the wild,” in Proc. 12th IEEE Int. Conf. Autom. Face Gesture Recognit. (FG), Washington, DC, USA, May/Jun. 2017, pp. 897–994, doi: 10.1109/FG.2017.123. [5] Ž. Emeršič et al., “The unconstrained ear recognition challenge,” in Proc. IEEE Int. Joint Conf. Biometrics (IJCB), Denver, CO, USA, Oct. 2017, pp. 715–724, doi: 10.1109/BTAS.2017.8272761. Celotna bibliografija je dostopna na SICRISu: https://cris.cobiss.net/ecris/si/sl/researcher/50289. 
 
-## DISKRETNE STRUKTURE 
+###### DISKRETNE STRUKTURE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1254,7 +1254,7 @@ http://www.combinatorics.org/Volume_17/PDF/v17i1r151.pdf. [COBISS.SI-ID 1581320]
 
 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=9390. 
 
-## ELEKTRONSKO IN MOBILNO POSLOVANJE 
+###### ELEKTRONSKO IN MOBILNO POSLOVANJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1396,7 +1396,7 @@ Lectures (including invited lecturers that are wellknown and have excellent repu
 
 Celotna bibliografija doc. dr. Rupnika je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=8740. 
 
-## GRAFIČNO OBLIKOVANJE 
+###### GRAFIČNO OBLIKOVANJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1546,7 +1546,7 @@ Knowledge and understanding: Knowledge of the fundamentals of visual communicati
 
 Celotna bibliografija doc. dr. Bovconove je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=33966. Celotna bibliografija doc. dr. Lebarja Bajca je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=13327. 
 
-## INFORMACIJSKI SISTEMI 
+###### INFORMACIJSKI SISTEMI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1818,7 +1818,7 @@ Damjan Vavpotič, Saimir Bala, Jan Mendling, Tomaž Hovelja, "Software process e
 
 Damjan Fujs, Simon Vrhovec, Damjan Vavpotič, "Balancing software and training requirements for information security", Computers & security, Nov. 2023, vol. 134, str. 1-13, ilustr., ISSN 0167-4048 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=13311. 
 
-IZBRANA POGLAVJA IZ RAČUNALNIŠTVA IN INFORMATIKE 
+###### IZBRANA POGLAVJA IZ RAČUNALNIŠTVA IN INFORMATIKE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -1975,7 +1975,7 @@ ALJAŽ, Tomaž, BRODNIK, Andrej. Supplementary services in telecommunication nex
 
 BRODNIK, Andrej, IACONO, John. Unit-time predecessor queries on massive data sets. Lect. notes comput. sci., part 1, str. 133-144, ilustr. [COBISS.SI-ID 8178260] Celotna bibliografija dr. Brodnika je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=5281. 
 
-## MATEMATIKA 
+###### MATEMATIKA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2136,7 +2136,7 @@ KOŠIR, Tomaž, OBLAK, Polona. On pairs of commuting nilpotent matrices. Transfo
 
 **DOLINAR, Gregor, GUTERMAN, Aleksandr Èmilevič, KUZMA, Bojan, OBLAK, Polona. Extremal matrix centralizers. Linear Algebra and its Applications, 2013, vol. 438, iss. 7, str. 2904-2910.** OBLAK, Polona, ŠMIGOC, Helena. Graphs that allow all the eigenvalue multiplicities to be even. _Linear Algebra and its Applications_ , 2014, vol. 454, str. 72-90. Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=15808. 
 
-## MULTIMEDIJSKE TEHNOLOGIJE 
+###### MULTIMEDIJSKE TEHNOLOGIJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2196,7 +2196,7 @@ Alenka Kavčič
 
 - Zapiski s predavanj, primeri in gradivo za vaje so sproti objavljeni v spletni učilnici. Lecture notes, examples and material for exercises are published in the online classroom. 
 
-## **Cilji in kompetence:** 
+## **Cilji in kompetence:**
 
 Cilj predmeta je, da študenti pridobijo znanja in veščine, potrebne za uporabo, načrtovanje in razvoj multimedijskih sistemov. Študenti bodo spoznali načine za učinkovito predstavitev, stiskanje in preiskovanje multimedijskih podatkov, kot so besedilo, zvok, slika in video, ter spoznali algoritmično in programsko ozadje, potrebno za razvoj multimedijskih aplikacij. Po zaključenem predmetu bodo študenti pridobili naslednje kompetence: - razumevanje in reševanje izzivov, povezanih z multimedijskimi vsebinami; 
 
@@ -2269,7 +2269,7 @@ KAVČIČ, Alenka, LOVRIĆ, Ivan, SMOLE, Vera. Interaktivna karta slovenskih nare
 
 KAVČIČ, Alenka, PESEK, Matevž, MAROLT, Matija. A platform for supporting learning process of visually impaired children. V: BILJANOVIĆ, Petar (ur.). _MIPRO 2017 : 40th Jubilee International Convention, May 22-26, 2017, Opatija, Croatia : proceedings_ . Rijeka: Croatian Society for Information and Communication Technology, Electronics and Microelectronics - MIPRO, cop. 2017. Str. 954-958, ilustr. MIPRO ... (Tisak). ISBN 978-953233-093-9. ISSN 1847-3938. http://docs.mipro-proceedings.com/proceedings/mipro_2017_proceedings.pdf. [COBISS.SI-ID 1537436355] Celotna bibliografija je dostopna na SICRISu: https://cris.cobiss.net/ecris/si/sl/researcher/9255. Complete bibliography is available in SICRIS: https://cris.cobiss.net/ecris/si/en/researcher/9255 
 
-## NAČRTOVANJE DIGITALNIH NAPRAV 
+###### NAČRTOVANJE DIGITALNIH NAPRAV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2339,7 +2339,7 @@ Celotna bibliografija je dostopna na COBISS:
 
 http://splet02.izum.si/cobiss/bibliography?langbib=slo&code=29198&formatbib=3. Complete bibliography is accessible on COBISS: http://splet02.izum.si/cobiss/bibliography?langbib=eng&code=29198&formatbib=3. 
 
-## NUMERIČNE METODE 
+###### NUMERIČNE METODE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2467,7 +2467,7 @@ Lectures, lab practice using Matlab program, homeworks. Particular emphasis is o
 
 Celotna bibliografija je dostopna na SICRISu: http://www.sicris.si/search/rsr.aspx?opt=1&lang=slv&id=41702 
 
-## ODLOČITVENI SISTEMI 
+###### ODLOČITVENI SISTEMI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2542,7 +2542,7 @@ Bohanec, M.: Odločanje in modeli, DMFA, 2006. Mallach, E.G.: Understanding Deci
 
 **Reference nosilca/Lecturer's references: Pet najpomembnejših del** : Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=12278. 
 
-## OPERACIJSKI SISTEMI 
+###### OPERACIJSKI SISTEMI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2652,7 +2652,7 @@ Lectures give basic concepts, tutorial further enlighten their practical value. 
 
 Celotna bibliografija je dostopna na COBISSu / Whole bibiliography is available in COBISS: http://splet02.izum.si/cobiss/bibliography?langbib=eng&li=en&homelang=svn&code=19226. 
 
-## ORGANIZACIJA RAČUNALNIKOV 
+###### ORGANIZACIJA RAČUNALNIKOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2772,7 +2772,7 @@ Predavanja, laboratorijske vaje, domače naloge in Lectures, laboratory sessions
 
 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=8611. 
 
-## OSNOVE VERJETNOSTI IN STATISTIKE 
+###### OSNOVE VERJETNOSTI IN STATISTIKE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -2921,7 +2921,7 @@ Predavanja, računske vaje z ustnimi nastopi, Lectures, tutorials, assignments, 
 
 Celotna bibliografija prof. dr. Jurišića je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=6518. Celotna bibliografija doc. dr. Oblakove je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=15808. 
 
-## PLANIRANJE IN UPRAVLJANJE INFORMATIKE 
+###### PLANIRANJE IN UPRAVLJANJE INFORMATIKE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3013,7 +3013,7 @@ Seminarske naloge v okviru vaj, kjer bo prisotno tudi and IT governance). Semina
 
 http://web.ebscohost.com/ehost/pdfviewer/pdfviewer?vid=3&hid=110&sid=e420e188-46e3-47488272-b2f3eda0892c%40sessionmgr113. [COBISS.SI-ID 8607060] 
 
-## PODATKOVNE BAZE 
+###### PODATKOVNE BAZE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3214,7 +3214,7 @@ Grading: 6-10 pass, 5 fail (according to the rules of University of Ljubljana).
 
 Celotna bibliografija doc. dr. Kukarja je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=8453. 
 
-## PODATKOVNE BAZE 2 
+###### PODATKOVNE BAZE 2 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3368,7 +3368,7 @@ Znanje in razumevanje: Knowledge and understanding: Poznavanje načinov za obnav
 
 Celotna bibliografija viš. pred. dr. Zrneca je dostopna na SICRISu: https://cris.cobiss.net/ecris/si/sl/researcher/12224. 
 
-## PODATKOVNO RUDARJENJE 
+###### PODATKOVNO RUDARJENJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3511,7 +3511,7 @@ DEMŠAR, Janez, ZUPAN, Blaž, LEBAN, Gregor, CURK, Tomaž. Orange : from experim
 
 CURK, Tomaž, ROT, Gregor, ZUPAN, Blaž. SNPsyn : detection and exploration of SNP-SNP interactions. _Nucleic acids research_ , ISSN 0305-1048, 2011, vol. 39, suppl. 2, str. 444-449, ilustr. [COBISS.SI-ID 8352596]. Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=16561. 
 
-## PRAVNI VIDIKI INFORMACIJSKIH TEHNOLOGIJ 
+###### PRAVNI VIDIKI INFORMACIJSKIH TEHNOLOGIJ 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3690,7 +3690,7 @@ LUTMAN, Karmen. Artificial intelligence and the prohibition of discrimination in
 
 LUTMAN, Karmen. Challenges of cross-border enforcement of consumer law : unfair contract terms. V: SLAKOPER, Zvonimir (ur.), TOT, Ivan (ur.). EU private law and the CISG : the effects for national law. London [i. e.] Abingdon; New York: Routledge, Taylor & Francis Group, 2021, str. [61]-72. [COBISS.SI-ID 74952451]. 
 
-## PREVAJALNIKI IN NAVIDEZNI STROJI 
+###### PREVAJALNIKI IN NAVIDEZNI STROJI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3764,7 +3764,7 @@ Znanje in razumevanje: Knowledge and understanding: Razumevanje delovanja prevaj
 
 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=7849. 
 
-## PROCESNA AVTOMATIKA 
+###### PROCESNA AVTOMATIKA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3858,7 +3858,7 @@ The following subject from previous semesters: • Input-Output Systems
 
 7. MACHIDON, Octavian M., STANCA, Cornel, OGRUȚAN, Petre, GERIGAN, Carmen, ACIU, Lia, Power-system protection device with IoT-based support for integration in smart environments. PLOS ONE, 2018. 
 
-## PRODUKCIJA MULTIMEDIJSKIH GRADIV 
+###### PRODUKCIJA MULTIMEDIJSKIH GRADIV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -3984,7 +3984,7 @@ RAVNIK, Robert, BATAGELJ, Borut, KVERH, Bojan, SOLINA, Franc. Dynamic anamorphos
 
 KVERH, Bojan, LIPANJE, Matevž, BATAGELJ, Borut, SOLINA, Franc. Piano crossing - walking on a keyboard. _Acta graph._ , 2010, vol. 22, no. 3/4, str. 25-38. 
 
-## PROGRAMIRANJE 1 
+###### PROGRAMIRANJE 1 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4159,7 +4159,7 @@ ter temami s področij študentov, ki predmet izberejo kot interdisciplinarni pr
 
 - Skupno število čistih citatov: WoS: 10934, Scopus: 13455. h-index h10: 20. 
 
-## PROGRAMIRANJE 2 
+###### PROGRAMIRANJE 2 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4314,7 +4314,7 @@ Poznavanje osnovnih programskih jezikov pomaga pri razumevanju delovanja računa
 
 Celotna bibliografija doc. dr. Dobravca je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=10416. 
 
-## PROGRAMIRANJE ENERGIJSKO OMEJENIH NAPRAV 
+###### PROGRAMIRANJE ENERGIJSKO OMEJENIH NAPRAV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4494,7 +4494,7 @@ Predavanja, praktične vaje in demonstracije, projektni Lectures, lab work, home
 
 **V. Pejovic and E. M. Belding,** WhiteRate: A Context-aware Approach to Wireless Transmission Adaptation, IEEE Transactions on Mobile Computing, Vol 13 (2014) 
 
-## PROGRAMSKI JEZIK C 
+###### PROGRAMSKI JEZIK C 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4584,7 +4584,7 @@ za reševanje industrijskih problemov ter pisanje applications. It is also used 
 
 5. DOBRAVEC, Tomaž, ŽEROVNIK, Janez, ROBIČ, Borut. An optimal message routing algorithm for circulant networks. Journal of Systems Architecture. vol. 52, no. 5, str. 298-306. 2006. 
 
-## RAČUNALNIŠKA ARHITEKTURA 
+###### RAČUNALNIŠKA ARHITEKTURA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4742,7 +4742,7 @@ Students will gain a clear understanding that a computer is not merely a “blac
 
 Celotna bibliografija prof. Patricia Bulića je dostopna na SICRISu: https://bib.cobiss.net/bibliographies/si/webBiblio/bib301_20240311_202706_19515.html. 
 
-## RAČUNALNIŠKA GRAFIKA 
+###### RAČUNALNIŠKA GRAFIKA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -4860,7 +4860,7 @@ Lectures with practical examples, autonomous lab work under the guidance of an a
 
 Celotna bibliografija doc. dr. Lebarja Bajca je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=8354. Celotna bibliografija prof. dr. Divjaka je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=4493. 
 
-## RAČUNALNIŠKE KOMUNIKACIJE 
+###### RAČUNALNIŠKE KOMUNIKACIJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5019,7 +5019,7 @@ PORENTA, Jernej, CIGLARIČ, Mojca. Comparing commercial IP reputation databases 
 
 ŠKOBERNE, Nejc, CIGLARIČ, Mojca. Practical evaluation of stateful NAT64/DNS64 translation. Advances in electrical and computer engineering, ISSN 1582-7445. [Print ed.], 2011, vol. 11, no. 3, pp. 49-54. PANČUR, Matjaž, CIGLARIČ, Mojca. Impact of test-driven development on productivity, code and tests : a controlled experiment. Information and software technology, ISSN 0950-5849. [Print ed.], Jun. 2011, vol. 53, no. 6, pp. 557-573. CIGLARIČ, Mojca. Effective message routing in unstructured peer-to-peer overlays. IEE proc., Commun. [Print ed.], October 2005, vol. 152, no. 5, str. 673-678. Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=8265. 
 
-## RAČUNALNIŠTVO V PRAKSI I 
+###### RAČUNALNIŠTVO V PRAKSI I 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5152,7 +5152,7 @@ SMITH, Glenn Gordon, HAWORTH, Robert, ŽITNIK, Slavko. Computer science meets ed
 
 KNEZ, Timotej, BAJEC, Marko, ŽITNIK, Slavko. ANGLEr : a next-generation natural language exploratory framework. V: GUIZZARDI, Renata (ur.), RALYTÉ, Jolita (ur.), FRANCH, Xavier (ur.). _Research challenges in information science : 16th International Conference, RCIS 2022, Barcelona, Spain, May 17-20, 2022 : proceedings_ . Cham: Springer, cop. 2022. Str. 761-768, ilustr. Lecture notes in business information processing (Internet), 446. ISBN 978-3-031-05760-1. ISSN 1865-1356. https://link.springer.com/chapter/10.1007/978-3-031-057601_53, DOI: 10.1007/978-3-031-05760-1_53. [COBISS.SI-ID 108466947], [SNIP, WoS, Scopus] 
 
-## RAČUNALNIŠTVO V PRAKSI II 
+###### RAČUNALNIŠTVO V PRAKSI II 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5247,7 +5247,7 @@ SMITH, Glenn Gordon, HAWORTH, Robert, ŽITNIK, Slavko. Computer science meets ed
 
 KNEZ, Timotej, BAJEC, Marko, ŽITNIK, Slavko. ANGLEr : a next-generation natural language exploratory framework. V: GUIZZARDI, Renata (ur.), RALYTÉ, Jolita (ur.), FRANCH, Xavier (ur.). _Research challenges in information science : 16th International Conference, RCIS 2022, Barcelona, Spain, May 17-20, 2022 : proceedings_ . Cham: Springer, cop. 2022. Str. 761-768, ilustr. Lecture notes in business information processing (Internet), 446. ISBN 978-3-031-05760-1. ISSN 1865-1356. https://link.springer.com/chapter/10.1007/978-3-031-057601_53, DOI: 10.1007/978-3-031-05760-1_53. [COBISS.SI-ID 108466947], [SNIP, WoS, Scopus] 
 
-## RAZVOJ IN OPERACIJE - DEVOPS 
+###### RAZVOJ IN OPERACIJE - DEVOPS 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5354,7 +5354,7 @@ Lectures, lab work, home assignments, project work.
 
 - RUGELJ, Jože, CIGLARIČ, Mojca, KREVL, Andrej, PANČUR, Matjaž, BRODNIK, Andrej. Constructivist learning environment in a cloud. V: UDEN, Lorna (ur.). _Workshop on learning technology for education in cloud (LTCE'12)_ . New York: Springer, 2012. Str. 193-204, ilustr. Advances in intelligent systems and computing, Vol. 173. ISBN 978-3-642-30858-1, ISBN 978-3-642-30859-8. 
 
-## RAZVOJ INFORMACIJSKIH SISTEMOV 
+###### RAZVOJ INFORMACIJSKIH SISTEMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5538,7 +5538,7 @@ Damjan Fujs, Simon Vrhovec, Boštjan Žvanut, Damjan Vavpotič, "Improving the e
 
 Damjan Fujs, Simon Vrhovec, Damjan Vavpotič, "Balancing software and training requirements for information security", Computers & security, Nov. 2023, vol. 134, str. 1-13, ilustr., ISSN 0167-4048 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=13311. 
 
-## ROBOTIKA IN RAČUNALNIŠKO ZAZNAVANJE 
+###### ROBOTIKA IN RAČUNALNIŠKO ZAZNAVANJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5691,7 +5691,7 @@ JL Wyatt, Aydemir A, Brenner M, Hanheide M, Hawes N, Jensfelt P, Kristan M, Krui
 
 Skočaj D, Kristan M, Vrečko A, Leonardis A, Fritz M, Stark M, Schiele B, Hongeng S, Wyatt JL. Multi-modal learning. V: _Cognitive systems_ , (Cognitive systems monographs, vol. 8). Berlin; Heidelberg: Springer, cop. 2010, str. 265-309 Celotna bibliografija je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=10425. 
 
-## SISTEMSKA PROGRAMSKA OPREMA 
+###### SISTEMSKA PROGRAMSKA OPREMA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5770,7 +5770,7 @@ Andrej Dobnikar, Branko Šter: Structural properties of recurrent neural network
 
 Jernej Zupanc, Damjana Drobne, Branko Šter: Markov random field model for segmenting large populations of lipid vesicles from micrographs. _Journal of liposome research_ , 21(4): 315-323, 2011. 
 
-## SPLETNE TEHNOLOGIJE 
+###### SPLETNE TEHNOLOGIJE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -5952,7 +5952,7 @@ Lectures and individual work in connection with seminars and project work in lab
 
 5. TREBAR, Mira, LOTRIČ, Metka, FONDA, Irena, PLETERŠEK, Anton, KOVAČIČ, Kosta. RFID data loggers in fish supply chain traceability. International journal of antennas and propagation (Online), ISSN 1687-5877, vol. 2013, str. 1-9 
 
-## SPLOŠNO IZBIRNI PREDMET 
+###### SPLOŠNO IZBIRNI PREDMET 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6004,7 +6004,7 @@ Lectures and individual work in connection with seminars and project work in lab
 
 **Reference nosilca/Lecturer's references:** 
 
-## STROKOVNO IZBIRNI PREDMETI 
+###### STROKOVNO IZBIRNI PREDMETI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6036,7 +6036,7 @@ Lectures and individual work in connection with seminars and project work in lab
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## STROKOVNO IZBIRNI PREDMETI 
+###### STROKOVNO IZBIRNI PREDMETI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6066,7 +6066,7 @@ Lectures and individual work in connection with seminars and project work in lab
 
 ## **Reference nosilca/Lecturer's references:** 
 
-## ŠPORTNA VZGOJA 1 
+###### ŠPORTNA VZGOJA 1 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6239,7 +6239,7 @@ OGRIZOVIĆ, Saša, MAJERIČ, Matej. Vadbena sredstva za preventivo pred poškodb
 
 OGRIZOVIĆ, Saša, MAJERIČ, Matej. Injurie prevention strength exercises with elastic band for wheelchair basketball  layers _8. međunarodna naučna konferencija "Antropološki i teoantropološki pogled  a fizičke aktivnosti od Konstantina Velikog do danas" = The Eighth International Scientific Conference  Anthropological and teo-anthropological views on physical activity from the time of Constantine the Great to modern times" : zbornik radova = book of proceedings : Kopaonik, 18.-19. mart 2021_ . Leposavić, 2021. Str. 287-290, ilustr. ISBN 978-86-82329-87-9. http://konferencija.fsfv.pr.ac.rs/doc/book_of_proceedings /book_of_proceedings_2021.pdf. [COBISS.SIID 96959747] 
 
-## ŠPORTNA VZGOJA 2 
+###### ŠPORTNA VZGOJA 2 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6385,7 +6385,7 @@ OGRIZOVIĆ, Saša, MAJERIČ, Matej. Vadbena sredstva za preventivo pred poškodb
 
 OGRIZOVIĆ, Saša, MAJERIČ, Matej. Injurie prevention strength exercises with elastic band for wheelchair basketball  layers _8. međunarodna naučna konferencija "Antropološki i teoantropološki pogled  a fizičke aktivnosti od Konstantina Velikog do danas" = The Eighth International Scientific Conference  Anthropological and teo-anthropological views on physical activity from the time of Constantine the Great to modern times" : zbornik radova = book of proceedings : Kopaonik, 18.-19. mart 2021_ . Leposavić, 2021. Str. 287-290, ilustr. ISBN 978-86-82329-87-9. http://konferencija.fsfv.pr.ac.rs/doc/book_of_proceedings /book_of_proceedings_2021.pdf. [COBISS.SIID 96959747] 
 
-## TEHNIČNE VEŠČINE 
+###### TEHNIČNE VEŠČINE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6463,7 +6463,7 @@ Dodatna literatura se predpiše vsako leto posebej glede na vsebino in predloge 
 
 **Modic, David in Anderson, Ross. (2015)** . It’s All over but the Crying: The Emotional and Financial Impact of Internet Fraud. _IEEE Security & Privacy, 13_ (5), 99-103. doi: 10.1109/MSP.2015.107 **Modic, David in Anderson, Ross. (2014)** . Reading This May Harm Your Computer: The Psychology of Malware Warnings. _Computers in Human Behavior, 41_ , 71-79. doi: 10.1016/j.chb.2014.09.014 **Modic, David in Lea, Stephen E. G. (2011)** . _How Neurotic Are Scam Victims, Really? The Big Five and Internet Scams._ Prispevek predstavljen na 2011 Conference of the International Confederation for the Advancement of Behavioral Economics and Economic Psychology, Exeter, United Kingdom. 
 
-## TEHNIČNE VEŠČINE 2 
+###### TEHNIČNE VEŠČINE 2 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6538,7 +6538,7 @@ Znanje in razumevanje: Learning and understanding: Študenti spoznavajo praktič
 
 **Modic, David in Anderson, Ross. (2015)** . It’s All over but the Crying: The Emotional and Financial Impact of Internet Fraud. _IEEE Security & Privacy, 13_ (5), 99-103. doi: 10.1109/MSP.2015.107 **Modic, David in Anderson, Ross. (2014)** . Reading This May Harm Your Computer: The Psychology of Malware Warnings. _Computers in Human Behavior, 41_ , 71-79. doi: 10.1016/j.chb.2014.09.014 **Modic, David in Lea, Stephen E. G. (2011)** . _How Neurotic Are Scam Victims, Really? The Big Five and Internet Scams._ Prispevek predstavljen na 2011 Conference of the International Confederation for the Advancement of Behavioral Economics and Economic Psychology, Exeter, United Kingdom. 
 
-## TEHNOLOGIJA IGER IN NAVIDEZNA RESNIČNOST 
+###### TEHNOLOGIJA IGER IN NAVIDEZNA RESNIČNOST 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6680,7 +6680,7 @@ Lectures give basic concepts, tutorial further enlighten their practical value. 
 
 - P. Peer, F. Solina, Panoramic Depth Imaging: Single Standard Camera Approach, _International Journal of Computer Vision_ 47(1/2/3), pp. 149-160, 2002. Celotna bibliografija je dostopna na COBISSu / Whole bibliography is available in COBISS: http://splet02.izum.si/cobiss/bibliography?langbib=eng&li=en&homelang=svn&code=19226. 
 
-## TEHNOLOGIJA PROGRAMSKE OPREME 
+###### TEHNOLOGIJA PROGRAMSKE OPREME 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -6815,7 +6815,7 @@ ROŽANC, Igor, MAHNIČ, Viljan. Experience in teaching software quality engineer
 
 Engineering Education (UICEE), Faculty of Engineering, Monash University, cop. 2006, str. 159-162, ilustr. [COBISS.SI-ID 5637204] Celotna bibliografija je dostopna na SICRISu: http://splet02.izum.si/cobiss/BibPersonal.jsp?init=t&code=13564 Complete bibliography is available in SICRIS: http://splet02.izum.si/cobiss/BibPersonal.jsp?init=t&code=13564 
 
-## TESTIRANJE IN KAKOVOST 
+###### TESTIRANJE IN KAKOVOST 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7008,9 +7008,9 @@ ROŽANC, Igor, SLIVNIK, Boštjan. Using reverse engineering to construct the pla
 
 Celotna bibliografija viš. pred. dr. Rožanca je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=8113. 
 
-## TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA 
+###### TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA 
 
-UČNI NAČRT PREDMETA/COURSE SYLLABUS 
+## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
 |TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA<br>UČNI NAČRT PREDMETA/COURSE SYLLABUS|TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA<br>UČNI NAČRT PREDMETA/COURSE SYLLABUS|TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA<br>UČNI NAČRT PREDMETA/COURSE SYLLABUS|TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA<br>UČNI NAČRT PREDMETA/COURSE SYLLABUS|TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA<br>UČNI NAČRT PREDMETA/COURSE SYLLABUS|TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA<br>UČNI NAČRT PREDMETA/COURSE SYLLABUS|TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA<br>UČNI NAČRT PREDMETA/COURSE SYLLABUS|TRAJNOSTNA STREŽNIŠKA INFRASTRUKTURA<br>UČNI NAČRT PREDMETA/COURSE SYLLABUS|
 |---|---|---|---|---|---|---|---|
@@ -7110,7 +7110,7 @@ infrastrukture (GPU, ASIC, itd), pametne mrežne kartice (ang. SmartNICs), podat
 
 - KNEZ, Timotej, ŽITNIK, Slavko. Event-centric temporal knowledge graph construction : a survey. _Mathematics_ . Dec. 2023, vol. 11, iss. 23, [article no.] 4852, str. 1-32, ilustr. ISSN 2227-7390. DOI: 10.3390/math11234852. 
 
-## TRAJNOSTNI VIDIKI RAČUNALNIŠTVA 
+###### TRAJNOSTNI VIDIKI RAČUNALNIŠTVA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7294,7 +7294,7 @@ Predavanja, praktične vaje in demonstracije, projektni Lectures, lab work, home
 
 5. CIGLARIČ, Mojca, PANČUR, Matjaž, SAFTIĆ, Saša. Analiza okoljevarstvenih in regulativnih pritiskov kot iniciativ, ki oblikujejo področje in trg zelenega data centra. Ljubljana: Univerza v Ljubljani, Fakulteta za računalništvo in informatiko, 2014. 16 f., ilustr. 
 
-## UMETNA INTELIGENCA 
+###### UMETNA INTELIGENCA 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7389,7 +7389,7 @@ KONONENKO, Igor, BRATKO, Ivan. Information-based evaluation criterion for classi
 
 KONONENKO, Igor. Machine learning for medical diagnosis: history, state of the art and perspective. Artif. intell. med., 2001, vol. 23, no. 1, str. 89-109. Celotna bibliografija prof. dr. Kononenka je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=5066. Complete bibliography is available in SICRIS: http://sicris.izum.si/search/rsr.aspx?lang=eng&id=5066. 
 
-## UPORABA IT ZA ŠTUDIJSKE ZADEVE 
+###### UPORABA IT ZA ŠTUDIJSKE ZADEVE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7476,7 +7476,7 @@ PUCER, Patrik, ŽVANUT, Boštjan, VAVPOTIČ, Damjan. Improving the use of e-lear
 
 HOVELJA, Tomaž, VAVPOTIČ, Damjan, ŽVANUT, Boštjan. A balanced scorecard-based model for evaluating e-learning and conventional pedagogical activities in nursing. _Assessment & evaluation in higher education_ , ISSN 1469-297X, 2016, vol. 41, iss. 8, str. 1254-1268 Celotna bibliografija je dostopna na SICRISu: http://www.sicris.si/search/rsr.aspx?lang=slv&id=13311 
 
-## UPORABNIŠKI VMESNIKI 
+###### UPORABNIŠKI VMESNIKI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7678,7 +7678,7 @@ Reflection: Refleksija: Acquiring skills about good and bad user interfaces Prid
 
 7. ANDREWS, Keith, SMRDEL, Aleš. Responsive Data Visualisation. Proc. Eurographics/VGTC Conference on Visualization, 2017, Barcelona Spain, str 113-115. 
 
-## UVOD V RAČUNALNIŠTVO 
+###### UVOD V RAČUNALNIŠTVO 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7747,7 +7747,7 @@ Način (pisni izpit, ustno izpraševanje, Type (examination, oral, coursework, n
 
 TAHERIZADEH, Salman, STANKOVSKI, Vlado. Dynamic multi-level auto-scaling rules for containerized applications. The Computer journal, febr. 2019, letn. 62, št. 2, str. 174-197, ilustr. ŠTEFANIČ, Polona, CIGALE, Matej, JONES, Andrew C., KNIGHT, Louise, TAYLOR, Ian, ISTRATE, Cristiana, SUCIU, George, ULISSES, Alexandre, STANKOVSKI, Vlado, TAHERIZADEH, Salman, SALADO, Guadalupe Flores, KOULOUZIS, Spiros, MARTIN, Paul, ZHAO, Zhiming. SWITCH workbench - a novel approach for the development and deployment of time-critical microservice-based cloudnative applications. Future Generation Computer Systems, 2019, letn. 99, št. okt., str. 197-212, ilustr. KOCHOVSKI, Petar, STANKOVSKI, Vlado. Building applications for smart and safe construction with the DECENTER Fog Computing and Brokerage Platform, Automation in Construction, 2021, št. 124, 103562. 
 
-## VARNOST ORGANIZACIJ 
+###### VARNOST ORGANIZACIJ 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -7943,7 +7943,7 @@ Scale: 6-10 pass, 5 and below fail (According to the rules and ordnances of the 
 
 **Modic, David in Anderson, Ross. (2014)** . Reading This May Harm Your Computer: The Psychology of Malware Warnings. _Computers in Human Behavior, 41_ , 71-79. doi: 10.1016/j.chb.2014.09.014 
 
-## VARNOST PODATKOV 
+###### VARNOST PODATKOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -8091,7 +8091,7 @@ Predavanja, praktične vaje in demonstracije, projektni Lectures, lab work, home
 
 - JELENC, David, HERMOSO, Ramón, SABATER-MIR, Jordi, TRČEK, Denis. Decision making matters: a better way to evaluate trust models. Knowledge-based systems. Nov. 2013. 
 
-## VARNOST PROGRAMOV 
+###### VARNOST PROGRAMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -8201,7 +8201,7 @@ Predavanja, praktične vaje in demonstracije, projektni Lectures, lab work, home
 
 **KAVČIČ, Alenka, PESEK, Matevž, BOHAK, Ciril, MAROLT, Matija** . Introducing on-site customers in agile software development projects: an alternative approach to project work in engineering education. International journal of engineering education. 2018, no. 2, part a, str. 482-496, ilustr. ISSN 0949-149X. 
 
-## VARNOST SISTEMOV 
+###### VARNOST SISTEMOV 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -8367,7 +8367,7 @@ Predavanja, praktične vaje in demonstracije, projektni Lectures, lab work, home
 
 **KAVČIČ, Alenka, PESEK, Matevž, BOHAK, Ciril, MAROLT, Matija** . Introducing on-site customers in agile software development projects: an alternative approach to project work in engineering education. International journal of engineering education. 2018, no. 2, part a, str. 482-496, ilustr. ISSN 0949-149X. 
 
-## VGRAJENI SISTEMI 
+###### VGRAJENI SISTEMI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -8478,7 +8478,7 @@ BULIĆ, Patricio, GUŠTIN, Veselko, ŠONC, Damjan, ŠTRANCAR, Andrej. An FPGA-ba
 
 BABIĆ, Zdenka, AVRAMOVIĆ, Aleksej, BULIĆ, Patricio. An iterative logarithmic multiplier. _Microprocess. microsyst._ . , 2011, vol. 35, no. 1, str. 23-33. Celotna bibliografija izr. prof. Patricia Bulića je dostopna na SICRISu: http://sicris.izum.si/search/rsr.aspx?lang=slv&id=11542. 
 
-## VHODNO-IZHODNE NAPRAVE 
+###### VHODNO-IZHODNE NAPRAVE 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 
@@ -8571,7 +8571,7 @@ Lectures and laboratory exercises, reports from laboratory exercises, homeworks 
 
 5. ROZMAN, Robert, GODEC, Igor. Smart grid design for efficient building management = Zasnova pametnega omrežja za učinkovito upravljanje zgradb. _Journal of energy technology_ . [Tiskana izd.]. aug. 2016, vol. 9, iss. 2, str. 11-25, ilustr. ISSN 1855-5748. [COBISS.SI-ID 1024237404] 
 
-## VZPOREDNI IN PORAZDELJENI SISTEMI IN ALGORITMI 
+###### VZPOREDNI IN PORAZDELJENI SISTEMI IN ALGORITMI 
 
 ## UČNI NAČRT PREDMETA/COURSE SYLLABUS 
 

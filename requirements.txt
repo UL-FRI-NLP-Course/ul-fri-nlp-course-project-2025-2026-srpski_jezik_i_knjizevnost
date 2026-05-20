@@ -6,6 +6,7 @@ faiss-cpu
 accelerate
 bitsandbytes
 torch
+torchvision
 transformers
 langchain-core
 langchain-community
@@ -14,3 +15,4 @@ langchain-text-splitters
 requests
 beautifulsoup4
 smolagents
+transformers
