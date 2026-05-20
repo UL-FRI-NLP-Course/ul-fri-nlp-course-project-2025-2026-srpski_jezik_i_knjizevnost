@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import torch
+from transformers import BitsAndBytesConfig
 from smolagents import (
     CodeAgent,
     ToolCallingAgent,
@@ -42,16 +44,6 @@ def _find_course(query: str) -> tuple[str, list[Session]]:
         if q in key.lower() or q in course.full_name.lower():
             return course.full_name, course.sessions
     return "", []
-
-
-@tool
-def list_courses() -> str:
-    """
-    Return a list of all available course short names in the timetable.
-    Use this to discover what courses exist before querying them.
-    """
-    return "\n".join(sorted(_COURSES.keys()))
-
 
 @tool
 def get_course_schedule(course_query: str) -> str:
@@ -157,36 +149,54 @@ def courses_by_degree(degree: str) -> str:
 
 
 TIMETABLE_TOOLS = [
-    list_courses,
     get_course_schedule,
     check_overlap,
     courses_on_day,
-    courses_by_degree,
 ]
 
 def build_agent(cache_dir):
     import os
-    from transformers import AutoTokenizer
+    from transformers import AutoTokenizer, AutoModelForCausalLM
     
     MODEL_ID = "Qwen/Qwen2.5-7B-Instruct"
     
     # Set HuggingFace cache directory
     os.environ['HF_HOME'] = cache_dir
-
+    
+    # 4-bit quantization config to reduce memory usage
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_compute_dtype=torch.bfloat16,
+    )
+    
+    # Load model manually with quantization
+    print("Loading quantized model...")
+    hf_model = AutoModelForCausalLM.from_pretrained(
+        MODEL_ID,
+        quantization_config=bnb_config,
+        device_map="auto",
+        trust_remote_code=True,
+    )
+    
+    # Load tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    
+    # Create TransformersModel without quantization_config (already applied above)
     model = TransformersModel(
         model_id=MODEL_ID,
-        device_map="auto",                          # Distribute across available GPUs automatically
+        device_map="auto",
         max_new_tokens=8096,
         trust_remote_code=True,
     )
     
-    # Properly configure the tokenizer for tool calling
-    tokenizer = model.model.get_tokenizer() if hasattr(model.model, 'get_tokenizer') else None
-    if tokenizer is None:
-        tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
-    
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
+    # Replace the underlying model with our quantized version
+    model.model = hf_model
+    model.tokenizer = tokenizer
+    print("Model loaded.")
 
     agent = ToolCallingAgent(
         tools=TIMETABLE_TOOLS,

@@ -16,7 +16,7 @@ from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from langchain_core.output_parsers import StrOutputParser
 from langchain_huggingface import HuggingFacePipeline, HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter, MarkdownHeaderTextSplitter
 
 from fri_schedule_agent import build_agent
 
@@ -49,17 +49,74 @@ def embed_documents(source_dir: str, vectorstore_dir: str):
     if not all_docs:
         raise ValueError(f"No PDF documents found in: {source_dir}")
 
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=150,
-        length_function=len,
-        add_start_index=True,
-    )
-
-    chunks = text_splitter.split_documents(all_docs)
-    print(f"Documents → chunks: {len(all_docs)} → {len(chunks)}")
+    # Manually split on course headers (######) and extract course names
+    chunks = []
+    for doc in all_docs:
+        # Split on lines starting with ######
+        lines = doc.page_content.split('\n')
+        current_course_name = None
+        current_chunk_lines = []
+        
+        for line in lines:
+            if line.startswith('###### '):
+                # Save previous chunk if it exists
+                if current_chunk_lines:
+                    chunk_content = '\n'.join(current_chunk_lines)
+                    if chunk_content.strip():
+                        chunk_doc = Document(
+                            page_content=chunk_content,
+                            metadata={
+                                "source": doc.metadata["source"],
+                                "course_name": current_course_name or "Unknown Course"
+                            }
+                        )
+                        chunks.append(chunk_doc)
+                
+                # Extract new course name
+                current_course_name = line.replace('###### ', '').strip()
+                current_chunk_lines = [line]
+            else:
+                current_chunk_lines.append(line)
+        
+        # Save final chunk
+        if current_chunk_lines:
+            chunk_content = '\n'.join(current_chunk_lines)
+            if chunk_content.strip():
+                chunk_doc = Document(
+                    page_content=chunk_content,
+                    metadata={
+                        "source": doc.metadata["source"],
+                        "course_name": current_course_name or "Unknown Course"
+                    }
+                )
+                chunks.append(chunk_doc)
+    
+    print(f"After manual header splitting: {len(chunks)} chunks")
+    print(f"Sample course names: {[c.metadata.get('course_name') for c in chunks[:5]]}")
     print(f"Average chunk size : {sum(len(c.page_content) for c in chunks) / len(chunks):.0f} chars")
     print(f"Min / Max          : {min(len(c.page_content) for c in chunks)} / {max(len(c.page_content) for c in chunks)} chars")
+    
+    # Stage 2: Further split large chunks with RecursiveCharacterTextSplitter
+    recursive_splitter = RecursiveCharacterTextSplitter(
+        separators=["\n\n", "\n", ". ", " ", ""],
+        chunk_size=2000,
+        chunk_overlap=200,
+    )
+    
+    final_chunks = []
+    for chunk in chunks:
+        if len(chunk.page_content) > 4000:
+            sub_chunks = recursive_splitter.split_text(chunk.page_content)
+            for sub_chunk in sub_chunks:
+                # Preserve course_name metadata when splitting
+                doc_obj = Document(page_content=sub_chunk, metadata=chunk.metadata)
+                final_chunks.append(doc_obj)
+        else:
+            final_chunks.append(chunk)
+    
+    print(f"After recursive splitting: {len(final_chunks)} chunks")
+    print(f"Average chunk size : {sum(len(c.page_content) for c in final_chunks) / len(final_chunks):.0f} chars")
+    print(f"Min / Max          : {min(len(c.page_content) for c in final_chunks)} / {max(len(c.page_content) for c in final_chunks)} chars")
 
     embeddings = HuggingFaceEmbeddings(
         model_name=EMBED_MODEL,
@@ -67,8 +124,8 @@ def embed_documents(source_dir: str, vectorstore_dir: str):
         encode_kwargs={"normalize_embeddings": True},
     )
     print(f"Embedding model loaded: {EMBED_MODEL}")
-    print(f"Indexing {len(chunks)} chunks into FAISS...")
-    vectorstore = FAISS.from_documents(chunks, embeddings)
+    print(f"Indexing {len(final_chunks)} chunks into FAISS...")
+    vectorstore = FAISS.from_documents(final_chunks, embeddings)
     print("Done.")
     print(f"Index size: {vectorstore.index.ntotal} vectors of dimension {vectorstore.index.d}")
 
@@ -130,17 +187,32 @@ def make_rag_prompt(inputs: dict) -> str:
         "Faculty of Computer Science. You have access to course syllabi.\n"
         "Answer ONLY from the provided context. Be specific about course names.\n"
         "If listing courses, always include: course name, ECTS credits, and semester.\n"
-        "If the answer is not in the context, say 'I don't have enough information.'\n\n"
+        "If the answer is not in the context, say 'I don't have enough information.'\n"
+        "If the user asks you about the time of a course or if there is overlap with"
+        "another course, you have a list of tools available. DO NOT call tools if the"
+        "answer they provide is not relevant to the users question.\n\n"
         f"CONTEXT:\n{inputs['context']}"
     )
     return f"{system}\n\nQuestion: {inputs['question']}"
 
 
 def format_docs(docs):
-    return "\n\n---\n\n".join(
-        f"[Source: {d.metadata.get('title', 'unknown')}]\n{d.page_content}"
-        for d in docs
-    )
+    """Format documents with course name metadata visible to the model."""
+    formatted = []
+    for d in docs:
+        course_name = d.metadata.get('course_name', 'Unknown Course')
+        section = d.metadata.get('section', '')
+        source = d.metadata.get('source', 'unknown')
+        
+        # Build header with all relevant metadata
+        header = f"[Course: {course_name}"
+        if section:
+            header += f" | Section: {section}"
+        header += f" | Source: {source}]"
+        
+        formatted.append(f"{header}\n{d.page_content}")
+    
+    return "\n\n---\n\n".join(formatted)
 
 def ask(question_en: str, rag_chain, history: list) -> str:
     print("-" * 60)
@@ -223,7 +295,7 @@ def parse_arguments():
     )
     parser.add_argument("input_file", help="Path to input JSON file with conversation history")
     parser.add_argument("--models-dir", default="/d/hpc/projects/onj_fri/srpski_jezik_i_knjizevnost", help="Directory where models are stored")
-    parser.add_argument("--documents-dir", default="..", help="Directory to scan for documents when building the index")
+    parser.add_argument("--documents-dir", default="../documents", help="Directory to scan for documents when building the index")
     parser.add_argument("--vectorstore-dir", default="../vectorstore/faiss_index", help="FAISS index directory")
     parser.add_argument("--build-index", action="store_true", default=False, help="Rebuild vectorstore before answering")
     return parser.parse_args()
@@ -244,6 +316,7 @@ if __name__ == "__main__":
     if args.build_index:
         print(f"Building vectorstore from: {args.documents_dir}")
         vectorstore = embed_documents(args.documents_dir, args.vectorstore_dir)
+        # exit(0)
     else:
         vectorstore = FAISS.load_local(
             args.vectorstore_dir,
