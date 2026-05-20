@@ -1,29 +1,24 @@
 import warnings
 warnings.filterwarnings("ignore")
 
-import pymupdf
 from pathlib import Path
-import os
-import re
-import numpy as np
 from functools import partial
 import json
-import sys
 import argparse
+import re
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, pipeline, MarianMTModel, MarianTokenizer
+from pydantic import BaseModel, field_validator
 from langchain_core.documents import Document
 
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from langchain_core.output_parsers import StrOutputParser
 from langchain_huggingface import HuggingFacePipeline, HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_text_splitters import RecursiveCharacterTextSplitter, TokenTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-import pymupdf4llm 
-
-from fri_schedule_agent import build_timetable_agent, ask_timetable_agent
+from fri_schedule_agent import build_agent
 
 input_path = [
     Path("../Računalništvo_in_informatika_UNI(2026-2027).pdf"),
@@ -38,258 +33,6 @@ SHORTCUTS = {
     "ects": "kreditne točke",
     "let":  "letnik",
 }
-
-# ─────────────────────────────────────────────
-# TOOL REGISTRY
-# Each tool is a dict with:
-#   name        – identifier the LLM uses in its decision
-#   description – natural language explanation for the LLM router
-#   fn          – callable(query, **kwargs) → str
-# ─────────────────────────────────────────────
-TOOL_REGISTRY: list[dict] = []
-
-
-def register_tool(name: str, description: str):
-    """Decorator that registers a function as an agent tool."""
-    def decorator(fn):
-        TOOL_REGISTRY.append({"name": name, "description": description, "fn": fn})
-        return fn
-    return decorator
-
-
-# ─────────────────────────────────────────────
-# TOOL DEFINITIONS
-# ─────────────────────────────────────────────
-
-@register_tool(
-    name="timetable",
-    description=(
-        "Query the live timetable / schedule system. Use this for questions about "
-        "lecture times, room assignments, overlapping classes, day-of-week schedules, "
-        "teachers in a specific slot, or any time-table related query."
-    ),
-)
-def timetable_tool(query: str, timetable_agent=None, **kwargs) -> str:
-    """Forward the query to the schedule scraping agent."""
-    if timetable_agent is None:
-        return "Timetable agent not initialised."
-    return ask_timetable_agent(query, timetable_agent)
-
-
-@register_tool(
-    name="direct_answer",
-    description=(
-        "Answer directly from the LLM's own knowledge. Use ONLY for greetings, "
-        "simple factual questions that don't require the syllabus or timetable, "
-        "or meta questions about the assistant itself."
-    ),
-)
-def direct_answer_tool(query: str, llm=None, tokenizer=None, **kwargs) -> str:
-    """Let the LLM answer without retrieval."""
-    if llm is None:
-        return "LLM not initialised."
-    messages = [
-        {"role": "system", "content": "You are a helpful academic assistant for FRI, University of Ljubljana."},
-        {"role": "user", "content": query},
-    ]
-    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-    return llm.invoke(prompt)
-
-
-# ─────────────────────────────────────────────
-# AGENT ROUTER  (Concept 1 – Autonomous Decision Making)
-# ─────────────────────────────────────────────
-
-def build_tool_description_block() -> str:
-    """Format the tool registry into a prompt block for the router."""
-    lines = ["Available tools:"]
-    for i, tool in enumerate(TOOL_REGISTRY, 1):
-        lines.append(f"  {i}. {tool['name']}: {tool['description']}")
-    return "\n".join(lines)
-
-
-def route_query(query: str, rag_context: str, model, tokenizer) -> str:
-    """
-    Ask the LLM which additional tool to use given a query and RAG context.
-    Returns the tool name string (e.g. 'timetable' or 'direct_answer').
-    Concept 1: The LLM autonomously decides which additional tool is appropriate.
-    """
-    tool_block = build_tool_description_block()
-    tool_names = [t["name"] for t in TOOL_REGISTRY]
-
-    system = (
-        "You are a query router. Given a user question and retrieved course context, "
-        "decide if an additional tool is needed.\n\n"
-        f"{tool_block}\n\n"
-        f"Respond with ONLY the tool name, one of: {tool_names}. "
-        "No explanation, no punctuation — just the tool name."
-    )
-    messages = [
-        {"role": "system", "content": system},
-        {"role": "user", "content": f"Question: {query}\n\nRetrieved context:\n{rag_context[:1000]}"},
-    ]
-    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-
-    eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    inputs = tokenizer(prompt, return_tensors="pt")
-    inputs = {k: v.to(model.device) for k, v in inputs.items()}
-
-    with torch.no_grad():
-        generated = model.generate(
-            **inputs,
-            max_new_tokens=12,
-            do_sample=False,
-            temperature=0.0,
-            pad_token_id=tokenizer.pad_token_id or tokenizer.eos_token_id,
-            eos_token_id=[tokenizer.eos_token_id, eot_token_id],
-        )
-
-    new_tokens = generated[0][inputs["input_ids"].shape[-1]:]
-    decision = tokenizer.decode(new_tokens, skip_special_tokens=True).strip().lower()
-
-    # Match decision to a known tool name (fallback: direct_answer)
-    for name in tool_names:
-        if name in decision:
-            return name
-    return "direct_answer"
-
-
-# ─────────────────────────────────────────────
-# MULTI-STEP AGENT  (Concept 2 – Multi-Step Queries)
-# ─────────────────────────────────────────────
-
-def run_agent(
-    query: str,
-    model,
-    tokenizer,
-    rag_chain,
-    timetable_agent,
-    llm,
-    history: list,
-    max_steps: int = 2,
-) -> str:
-    """
-    Agent pipeline: always enrich with RAG, then optionally call additional tools.
-    """
-    tool_kwargs = {
-        "timetable_agent": timetable_agent,
-        "llm": llm,
-        "tokenizer": tokenizer,
-        "history": history,
-    }
-
-    tool_map = {t["name"]: t["fn"] for t in TOOL_REGISTRY}
-
-    # STEP 1: Always retrieve RAG context
-    print("[Agent step 1] → RAG retrieval")
-    rag_result = ask(query, rag_chain, history)
-    gathered_context = [f"[rag_context]: {rag_result}"]
-
-    # STEP 2: Decide if additional tools are needed
-    for step in range(2, max_steps + 1):
-        chosen_tool = route_query(query, rag_result, model, tokenizer)
-        print(f"[Agent step {step}] → additional tool: {chosen_tool}")
-        
-        if chosen_tool == "direct_answer":
-            # We have enough context from RAG, no additional tool needed
-            break
-
-        fn = tool_map[chosen_tool]
-        result = fn(query, **tool_kwargs)
-        gathered_context.append(f"[{chosen_tool}]: {result}")
-
-    # STEP 3: Synthesise final answer from all gathered context
-    if len(gathered_context) == 1:
-        # Only RAG context, return as-is
-        return gathered_context[0].split("]:", 1)[-1].strip()
-
-    return _synthesise(query, gathered_context, model, tokenizer, history)
-
-
-def _synthesise(query: str, context_parts: list[str], model, tokenizer, history: list) -> str:
-    """Merge results from multiple tools into one coherent answer."""
-    combined = "\n\n".join(context_parts)
-    system = (
-        "You are an academic assistant. Using the information retrieved by multiple tools, "
-        "write a clear, concise answer to the user's question.\n\n"
-        f"RETRIEVED INFORMATION:\n{combined}"
-    )
-    messages = [{"role": "system", "content": system}]
-    for turn in history:
-        messages.append({"role": "user",      "content": turn["question"]})
-        messages.append({"role": "assistant", "content": turn["answer"]})
-    messages.append({"role": "user", "content": query})
-
-    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-
-    eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    inputs = tokenizer(prompt, return_tensors="pt")
-    inputs = {k: v.to(model.device) for k, v in inputs.items()}
-
-    with torch.no_grad():
-        generated = model.generate(
-            **inputs,
-            max_new_tokens=1024,
-            do_sample=False,
-            repetition_penalty=1.1,
-            pad_token_id=tokenizer.pad_token_id or tokenizer.eos_token_id,
-            eos_token_id=[tokenizer.eos_token_id, eot_token_id],
-        )
-
-    new_tokens = generated[0][inputs["input_ids"].shape[-1]:]
-    return tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
-
-
-def _rect_overlap_area(a: pymupdf.Rect, b: pymupdf.Rect) -> float:
-    inter = a & b
-    if inter.is_empty:
-        return 0.0
-    return float(inter.width * inter.height)
-
-
-def _is_mostly_inside(inner: pymupdf.Rect, outer: pymupdf.Rect, threshold: float = 0.6) -> bool:
-    overlap = _rect_overlap_area(inner, outer)
-    area = float(inner.width * inner.height)
-    if area <= 0:
-        return False
-    return (overlap / area) >= threshold
-
-
-def _to_markdown_table(rows: list[list[str]]) -> str:
-    if not rows:
-        return ""
-    col_count = max(len(r) for r in rows)
-
-    def norm_cell(v: str) -> str:
-        if v is None:
-            return ""
-        return str(v).replace("\n", " ").replace("|", "\\|").strip()
-
-    normalized = []
-    for row in rows:
-        padded = [norm_cell(cell) for cell in row] + [""] * (col_count - len(row))
-        normalized.append(padded)
-
-    header = normalized[0]
-    separators = ["---"] * col_count
-    body_rows = normalized[1:]
-
-    md_lines = [
-        "| " + " | ".join(header) + " |",
-        "| " + " | ".join(separators) + " |",
-    ]
-    for row in body_rows:
-        md_lines.append("| " + " | ".join(row) + " |")
-    return "\n".join(md_lines)
-
-
-def document_to_markdown(input_path: Path, output_path: Path, name: str) -> None:
-    doc = pymupdf.open(input_path)
-    md_content = pymupdf4llm.to_markdown(doc)
-    with open(output_path / name, "w", encoding="utf-8") as out:
-        out.write(md_content)
-    doc.close()
-
 
 def load_markdown_documents(folder: str) -> list[Document]:
     docs = []
@@ -340,6 +83,8 @@ def get_retriever(vectorstore, context_size, search_type="similarity"):
     size_fac = context_size if context_size is not None else 1
     retrieve_num = size_fac * 6
 
+    print(f"Retrieving {retrieve_num} chunks")
+
     if search_type == "similarity":
         return vectorstore.as_retriever(
             search_type="similarity",
@@ -354,31 +99,17 @@ def get_retriever(vectorstore, context_size, search_type="similarity"):
         raise ValueError("Unknown search type.")
 
 
-# def load_model(model_name):
-#     bnb_config = BitsAndBytesConfig(
-#         load_in_4bit=True,
-#         bnb_4bit_quant_type="nf4",
-#         bnb_4bit_use_double_quant=True,
-#         bnb_4bit_compute_dtype=torch.bfloat16,
-#     )
-#     print("Loading model...")
-#     model = AutoModelForCausalLM.from_pretrained(
-#         model_name,
-#         quantization_config=bnb_config,
-#         device_map="auto",
-#         trust_remote_code=True,
-#     )
-#     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-#     tokenizer.pad_token = tokenizer.eos_token
-#     tokenizer.padding_side = "left"
-#     print("Model loaded.")
-#     return model, tokenizer
-
 def load_model(model_name, cache_dir):
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_compute_dtype=torch.bfloat16,
+    )
     print("Loading model...")
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
-        torch_dtype=torch.float16,
+        quantization_config=bnb_config,
         device_map="auto",
         trust_remote_code=True,
         cache_dir=cache_dir
@@ -393,7 +124,7 @@ def load_model(model_name, cache_dir):
     print("Model loaded.")
     return model, tokenizer
 
-def make_rag_prompt(inputs: dict, tokenizer) -> str:
+def make_rag_prompt(inputs: dict) -> str:
     system = (
         "You are an academic advisor assistant for the University of Ljubljana, "
         "Faculty of Computer Science. You have access to course syllabi.\n"
@@ -402,12 +133,7 @@ def make_rag_prompt(inputs: dict, tokenizer) -> str:
         "If the answer is not in the context, say 'I don't have enough information.'\n\n"
         f"CONTEXT:\n{inputs['context']}"
     )
-    messages = [{"role": "system", "content": system}]
-    for turn in inputs.get("history", []):
-        messages.append({"role": "user",      "content": turn["question"]})
-        messages.append({"role": "assistant", "content": turn["answer"]})
-    messages.append({"role": "user", "content": inputs["question"]})
-    return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    return f"{system}\n\nQuestion: {inputs['question']}"
 
 
 def format_docs(docs):
@@ -415,7 +141,6 @@ def format_docs(docs):
         f"[Source: {d.metadata.get('title', 'unknown')}]\n{d.page_content}"
         for d in docs
     )
-
 
 def ask(question_en: str, rag_chain, history: list) -> str:
     print("-" * 60)
@@ -443,7 +168,18 @@ def save_conversation_to_file(filepath: str, history: list[dict], current_query:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
 
-def extract_chunk_number(model, tokenizer, input_query):
+def extract_chunk_number(agent, input_query):
+    class ChunkNumberResponse(BaseModel):
+        """Validated response for chunk number extraction."""
+        chunk_count: int | None = None
+        
+        @field_validator('chunk_count')
+        @classmethod
+        def validate_chunk_count(cls, v):
+            if v is not None and v <= 0:
+                raise ValueError("chunk_count must be positive")
+            return v
+    
     with open("../examples/examples.md", "r", encoding="utf-8") as f:
         examples_string = f.read()
 
@@ -461,38 +197,23 @@ def extract_chunk_number(model, tokenizer, input_query):
         f"{input_query}\n\n"
         "Return exactly one token: an integer like 3, or None."
     )
-    messages = [
-        {"role": "system", "content": system_message},
-        {"role": "user", "content": user_message},
-    ]
-    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-
-    model_inputs = tokenizer(prompt, return_tensors="pt")
-    model_inputs = {key: value.to(model.device) for key, value in model_inputs.items()}
-
-    pad_token_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
-    eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    eos_token_ids = [tokenizer.eos_token_id, eot_token_id]
-
-    with torch.no_grad():
-        generated_ids = model.generate(
-            **model_inputs,
-            max_new_tokens=8,
-            do_sample=False,
-            temperature=0.0,
-            pad_token_id=pad_token_id,
-            eos_token_id=eos_token_ids,
-        )
-
-    new_tokens = generated_ids[0][model_inputs["input_ids"].shape[-1]:]
-    raw_answer = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
-
-    if raw_answer.lower().startswith("none"):
-        return None
-    match = re.search(r"-?\d+", raw_answer)
-    if match is not None:
-        return int(match.group(0))
-    return None
+    
+    prompt = f"{system_message}\n\n{user_message}"
+    result = agent.invoke(prompt)
+    print(f"Agent response: {result}")
+    
+    # Extract integer from the response using regex
+    match = re.search(r'\d+', str(result).strip())
+    chunk_count = int(match.group()) if match else None
+    
+    # Validate using Pydantic
+    try:
+        response = ChunkNumberResponse(chunk_count=chunk_count)
+        print(f"Extracted number: {response.chunk_count}")
+        return response.chunk_count if response.chunk_count is not None else 1
+    except ValueError as e:
+        print(f"Validation error: {e}. Using default value of 1.")
+        return 1
 
 
 def parse_arguments():
@@ -530,33 +251,19 @@ if __name__ == "__main__":
             allow_dangerous_deserialization=True,
         )
 
-    model, tokenizer = load_model(
-        "meta-llama/Meta-Llama-3-8B-Instruct",
-        args.models_dir
-    )
-    eot_token_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
+    # model, tokenizer = load_model(
+    #     "Qwen/Qwen2.5-7B-Instruct",
+    #     args.models_dir
+    # )
 
-    timetable_agent = build_timetable_agent(model, tokenizer)
+    llm = build_agent(args.models_dir)
 
     query = "Tell me some courses where I can learn about embebbed-systems."
 
-    context_size = extract_chunk_number(model, tokenizer, query)
+    context_size = extract_chunk_number(llm, query)
     retriever = get_retriever(vectorstore, context_size, search_type="mmr")
 
-    hf_pipeline = pipeline(
-        task="text-generation",
-        model=model,
-        tokenizer=tokenizer,
-        return_full_text=False,
-        max_new_tokens=2048,
-        do_sample=False,
-        repetition_penalty=1.1,
-        pad_token_id=tokenizer.eos_token_id,
-        eos_token_id=[tokenizer.eos_token_id, eot_token_id],
-    )
-    llm = HuggingFacePipeline(pipeline=hf_pipeline)
-
-    RAG_PROMPT = RunnableLambda(partial(make_rag_prompt, tokenizer=tokenizer))
+    RAG_PROMPT = RunnableLambda(partial(make_rag_prompt))
     rag_chain = (
         {
             "context":  RunnableLambda(lambda x: x["question"]) | retriever | format_docs,
@@ -565,31 +272,22 @@ if __name__ == "__main__":
         }
         | RAG_PROMPT
         | llm
-        | StrOutputParser()
+        # | StrOutputParser()
     )
 
-    # Load conversation history
     input_file = args.input_file
     print(f"Loading conversation from: {input_file}")
     chat_history = load_conversation_from_file(input_file)
 
-    # Preprocess query
-    query = preprocess_query(query)
-    print(f"[Vprašanje]: {query}")
+    print(f"[Vprašanje]:\n {query}")
 
-    answer = run_agent(
-        query=query,
-        model=model,
-        tokenizer=tokenizer,
-        rag_chain=rag_chain,
-        timetable_agent=timetable_agent,
-        llm=llm,
-        history=chat_history,
-    )
+    answer = rag_chain.invoke({
+        "question": query,
+        "history": chat_history
+    })
 
-    print(f"\nOdgovor: {answer}")
+    print(f"[Odgovor]:\n {answer}")
 
-    # Save updated history
     chat_history.append({"question": query, "answer": answer})
     save_conversation_to_file(input_file, chat_history, query, answer)
     print(f"\nConversation saved to: {input_file}")

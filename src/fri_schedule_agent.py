@@ -1,20 +1,32 @@
 from __future__ import annotations
 
-from langchain_core.tools import tool
-from langchain.agents import initialize_agent, AgentType
-from langchain_huggingface import HuggingFacePipeline
-from transformers import pipeline
+from smolagents import (
+    CodeAgent,
+    ToolCallingAgent,
+    TransformersModel,
+    tool,
+)
+from langchain_core.runnables import Runnable
 from schedule import fetch_timetable, Course, Session
 
 print("Loading timetable...")
 _COURSES: dict[str, Course] = fetch_timetable()
 print(f"Loaded {len(_COURSES)} courses.")
 
+class AgentLLM(Runnable):
+    def __init__(self, agent):
+        self.agent = agent
+    
+    def invoke(self, prompt: str, config=None) -> str:
+        """Call the agent with the prompt."""
+        if isinstance(prompt, dict):
+            # If it's a dict (from LangChain piping), try to extract the actual prompt
+            prompt = prompt.get("question", str(prompt))
+        return self.agent.run(prompt)
 
 def _time_to_minutes(t: str) -> int:
     h, m = map(int, t.split(":"))
     return h * 60 + m
-
 
 def _sessions_overlap(a: Session, b: Session) -> bool:
     if a.day != b.day:
@@ -152,110 +164,34 @@ TIMETABLE_TOOLS = [
     courses_by_degree,
 ]
 
-AGENT_SYSTEM_PROMPT = (
-    "You are a university timetable assistant for FRI Ljubljana. "
-    "Use tools to look up schedule information. Be concise and precise. "
-    "Always call a tool before giving a final answer about courses or schedules."
-)
-
-
-def build_timetable_agent(model, tokenizer):
-    """
-    Build a LangChain agent for timetable queries using REACT agent type.
-    Works with local HuggingFace models that don't support bind_tools().
+def build_agent(cache_dir):
+    import os
+    from transformers import AutoTokenizer
     
-    Args:
-        model: The loaded transformer model
-        tokenizer: The corresponding tokenizer
+    MODEL_ID = "Qwen/Qwen2.5-7B-Instruct"
     
-    Returns:
-        An agent executor instance ready to process queries
-    """
-    # Create the pipeline and LangChain LLM wrapper
-    hf_pipeline = pipeline(
-        task="text-generation",
-        model=model,
-        tokenizer=tokenizer,
-        max_new_tokens=512,
-        do_sample=False,
-        return_full_text=False,
+    # Set HuggingFace cache directory
+    os.environ['HF_HOME'] = cache_dir
+
+    model = TransformersModel(
+        model_id=MODEL_ID,
+        device_map="auto",                          # Distribute across available GPUs automatically
+        max_new_tokens=8096,
+        trust_remote_code=True,
     )
-    llm = HuggingFacePipeline(pipeline=hf_pipeline)
     
-    # Use initialize_agent with STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION
-    # This works with local models and doesn't require single-input tools
-    agent_executor = initialize_agent(
+    # Properly configure the tokenizer for tool calling
+    tokenizer = model.model.get_tokenizer() if hasattr(model.model, 'get_tokenizer') else None
+    if tokenizer is None:
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
+    
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    agent = ToolCallingAgent(
         tools=TIMETABLE_TOOLS,
-        llm=llm,
-        agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=True,
-        max_iterations=4,
-        handle_parsing_errors=True,
+        model=model,
+        max_steps=5,
     )
-    
-    return agent_executor
 
-
-def ask_timetable_agent(question: str, agent_executor) -> str:
-    """
-    Ask the timetable agent a question and return its answer as a string.
-    This is the main entry point to call from main.py.
-
-    Args:
-        question: Natural language question about the timetable.
-        agent_executor: Agent executor built with build_timetable_agent().
-
-    Returns:
-        String answer from the agent.
-    """
-    result = agent_executor.invoke({"input": question})
-    return result.get("output", "")
-
-
-
-# def _standalone_test():
-#     """Run agent standalone with SmolLM2-1.7B for quick testing."""
-#     from transformers import AutoModelForCausalLM, AutoTokenizer
-
-#     MODEL_NAME = "HuggingFaceTB/SmolLM2-1.7B-Instruct"   # minimum size that works reliably
-#     print(f"\nLoading {MODEL_NAME} for standalone test...")
-
-#     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-#     tokenizer.pad_token = tokenizer.eos_token
-#     tokenizer.padding_side = "left"
-
-#     model = AutoModelForCausalLM.from_pretrained(
-#         MODEL_NAME,
-#         dtype=torch.float32,
-#         device_map="cpu",
-#         low_cpu_mem_usage=True,
-#     )
-#     print("Model loaded.\n")
-
-#     agent = build_timetable_agent(model, tokenizer)
-
-#     print("=" * 60)
-#     print("FRI Timetable Agent — standalone test mode")
-#     print("Type 'quit' to exit.")
-#     print("=" * 60)
-#     print()
-
-#     while True:
-#         try:
-#             question = input("You: ").strip()
-#         except (EOFError, KeyboardInterrupt):
-#             print("\nGoodbye!")
-#             break
-
-#         if not question:
-#             continue
-#         if question.lower() in ("quit", "exit", "q"):
-#             print("Goodbye!")
-#             break
-
-#         result = ask_timetable_agent(question, agent)
-#         print(f"\nAgent: {result}\n")
-
-
-# if __name__ == "__main__":
-#     _standalone_test()
+    return AgentLLM(agent)
