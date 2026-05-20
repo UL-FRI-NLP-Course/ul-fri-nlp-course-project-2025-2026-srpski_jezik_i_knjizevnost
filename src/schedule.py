@@ -49,11 +49,11 @@ class Course:
     sessions: list[Session] = field(default_factory=list)
 
     def __repr__(self):
-        lines = [f"📚 {self.full_name}  [{self.short_name}]"]
+        lines = [f"{self.full_name}  [{self.short_name}]"]
         for s in self.sessions:
             degrees = ", ".join(sorted(set(s.degree_types))) or "—"
             lines.append(
-                f"   {s.day:12s}  {s.start} – {s.end}"
+                f"   {s.day:12s}  {s.start} - {s.end}"
                 f"  {s.session_type:18s}  [{s.type_code:3s}]"
                 f"  {s.classroom:6s}  {s.teacher}"
                 f"  | {degrees}"
