@@ -43,7 +43,8 @@ def load_markdown_documents(folder: str) -> list[Document]:
 
 
 def embed_documents(source_dir: str, vectorstore_dir: str):
-    EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+    # EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+    EMBED_MODEL = "sentence-transformers/multi-qa-mpnet-base-dot-v1"
     all_docs = load_markdown_documents(source_dir)
 
     if not all_docs:
@@ -99,20 +100,17 @@ def embed_documents(source_dir: str, vectorstore_dir: str):
     # Stage 2: Further split large chunks with RecursiveCharacterTextSplitter
     recursive_splitter = RecursiveCharacterTextSplitter(
         separators=["\n\n", "\n", ". ", " ", ""],
-        chunk_size=2000,
-        chunk_overlap=200,
+        chunk_size=700,
+        chunk_overlap=50,
     )
     
     final_chunks = []
     for chunk in chunks:
-        if len(chunk.page_content) > 4000:
-            sub_chunks = recursive_splitter.split_text(chunk.page_content)
-            for sub_chunk in sub_chunks:
-                # Preserve course_name metadata when splitting
-                doc_obj = Document(page_content=sub_chunk, metadata=chunk.metadata)
-                final_chunks.append(doc_obj)
-        else:
-            final_chunks.append(chunk)
+        sub_chunks = recursive_splitter.split_text(chunk.page_content)
+        for sub_chunk in sub_chunks:
+            # Preserve course_name metadata when splitting
+            doc_obj = Document(page_content=sub_chunk, metadata=chunk.metadata)
+            final_chunks.append(doc_obj)
     
     print(f"After recursive splitting: {len(final_chunks)} chunks")
     print(f"Average chunk size : {sum(len(c.page_content) for c in final_chunks) / len(final_chunks):.0f} chars")
@@ -184,13 +182,17 @@ def load_model(model_name, cache_dir):
 def make_rag_prompt(inputs: dict) -> str:
     system = (
         "You are an academic advisor assistant for the University of Ljubljana, "
-        "Faculty of Computer Science. You have access to course syllabi.\n"
-        "Answer ONLY from the provided context. Be specific about course names.\n"
-        "If listing courses, always include: course name, ECTS credits, and semester.\n"
-        "If the answer is not in the context, say 'I don't have enough information.'\n"
-        "If the user asks you about the time of a course or if there is overlap with"
-        "another course, you have a list of tools available. DO NOT call tools if the"
-        "answer they provide is not relevant to the users question.\n\n"
+        "Faculty of Computer Science. You have access to course syllabi.\n\n"
+        "RESPONSE RULES:\n"
+        "- Answer ONLY from the provided context\n"
+        "- Be concise and match the detail level of the question:\n"
+        "  * If asked for just course names → provide only names\n"
+        "  * If asked for course information/details → always include: course name, ECTS credits, semester\n"
+        "  * If asked for descriptions or recommendations → provide relevant details from syllabus\n"
+        "- Do not add extra information beyond what was asked\n"
+        "- If information is not in the context, say 'I don't have enough information'\n"
+        "- When asked about scheduling or conflicts, use the available tools\n"
+        "- Do not repeat the same courses in your answer when listing them.\n\n"
         f"CONTEXT:\n{inputs['context']}"
     )
     return f"{system}\n\nQuestion: {inputs['question']}"
@@ -331,7 +333,7 @@ if __name__ == "__main__":
 
     llm = build_agent(args.models_dir)
 
-    query = "Tell me some courses where I can learn about embebbed-systems."
+    query = "Imam."
 
     context_size = extract_chunk_number(llm, query)
     retriever = get_retriever(vectorstore, context_size, search_type="mmr")

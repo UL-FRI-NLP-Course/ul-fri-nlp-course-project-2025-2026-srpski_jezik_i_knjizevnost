@@ -119,8 +119,34 @@ def fetch_timetable(url: str = URL) -> dict[str, Course]:
       - degree_types  -> ["Bachelor (UN)", "Master", ...] (from hover text)
       - groups        -> ["2_BUN-RI_LV_01", ...]
     """
-    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
-    response.raise_for_status()
+    # Retry logic with exponential backoff
+    max_retries = 3
+    timeout = 60  # Increased from 20 seconds
+    
+    for attempt in range(max_retries):
+        try:
+            print(f"Fetching timetable... (attempt {attempt + 1}/{max_retries})")
+            response = requests.get(
+                url, 
+                headers={"User-Agent": "Mozilla/5.0"}, 
+                timeout=timeout
+            )
+            response.raise_for_status()
+            print("Timetable fetched successfully!")
+            break
+        except requests.exceptions.Timeout:
+            if attempt < max_retries - 1:
+                print(f"  Timeout. Retrying with longer timeout ({timeout * 1.5:.0f}s)...")
+                timeout *= 1.5
+            else:
+                print(f"  Failed to fetch timetable after {max_retries} attempts. Using empty timetable.")
+                return {}
+        except requests.exceptions.RequestException as e:
+            if attempt < max_retries - 1:
+                print(f"  Error: {e}. Retrying...")
+            else:
+                print(f"  Failed to fetch timetable after {max_retries} attempts. Using empty timetable.")
+                return {}
 
     soup = BeautifulSoup(response.text, "html.parser")
     courses: dict[str, Course] = {}
