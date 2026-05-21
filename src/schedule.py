@@ -119,6 +119,9 @@ def fetch_timetable(url: str = URL) -> dict[str, Course]:
       - degree_types  -> ["Bachelor (UN)", "Master", ...] (from hover text)
       - groups        -> ["2_BUN-RI_LV_01", ...]
     """
+    # TODO: API call disabled for now - returning empty timetable
+    return {}
+    
     # Retry logic with exponential backoff
     max_retries = 3
     timeout = 60  # Increased from 20 seconds

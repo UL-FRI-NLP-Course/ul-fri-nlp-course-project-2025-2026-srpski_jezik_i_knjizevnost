@@ -43,9 +43,10 @@ def load_markdown_documents(folder: str) -> list[Document]:
 
 
 def embed_documents(source_dir: str, vectorstore_dir: str):
-    # EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+    EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
     # EMBED_MODEL = "sentence-transformers/multi-qa-mpnet-base-dot-v1"
-    EMBED_MODEL = "BAAI/bge-large-en-v1.5"
+    # EMBED_MODEL = "BAAI/bge-large-en-v1.5"
+    # EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
     all_docs = load_markdown_documents(source_dir)
 
     if not all_docs:
@@ -60,7 +61,7 @@ def embed_documents(source_dir: str, vectorstore_dir: str):
         current_chunk_lines = []
         
         for line in lines:
-            if line.startswith('###### '):
+            if line.startswith('Predmet: '):
                 # Save previous chunk if it exists
                 if current_chunk_lines:
                     chunk_content = '\n'.join(current_chunk_lines)
@@ -75,7 +76,7 @@ def embed_documents(source_dir: str, vectorstore_dir: str):
                         chunks.append(chunk_doc)
                 
                 # Extract new course name
-                current_course_name = line.replace('###### ', '').strip()
+                current_course_name = line.replace('Predmet: ', '').strip()
                 current_chunk_lines = [line]
             else:
                 current_chunk_lines.append(line)
@@ -142,7 +143,7 @@ def embed_documents(source_dir: str, vectorstore_dir: str):
 
 def get_retriever(vectorstore, context_size, search_type="similarity"):
     size_fac = context_size if context_size is not None else 1
-    retrieve_num = size_fac * 6
+    retrieve_num = size_fac * 3
 
     print(f"Retrieving {retrieve_num} chunks")
 
@@ -160,46 +161,36 @@ def get_retriever(vectorstore, context_size, search_type="similarity"):
         raise ValueError("Unknown search type.")
 
 
-def load_model(model_name, cache_dir):
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_use_double_quant=True,
-        bnb_4bit_compute_dtype=torch.bfloat16,
-    )
-    print("Loading model...")
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        quantization_config=bnb_config,
-        device_map="auto",
-        trust_remote_code=True,
-        cache_dir=cache_dir
-    )
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_name,
-        trust_remote_code=True,
-        cache_dir=cache_dir
-    )
-    tokenizer.pad_token = tokenizer.eos_token
-    tokenizer.padding_side = "left"
-    print("Model loaded.")
-    return model, tokenizer
-
 def make_rag_prompt(inputs: dict) -> str:
+    # system = (
+    #     "You are an academic advisor assistant for the University of Ljubljana, "
+    #     "Faculty of Computer Science. You have access to course syllabi.\n\n"
+    #     "RESPONSE RULES:\n"
+    #     "- Answer ONLY from the provided context\n"
+    #     "- Be concise and match the detail level of the question:\n"
+    #     "  * If asked for course information/details → always include: course name, ECTS credits, semester\n"
+    #     "  * If asked for descriptions or recommendations → provide relevant details from syllabus\n"
+    #     "- If information is not in the context, say 'I don't have enough information'\n"
+    #     "- When asked about scheduling or conflicts, use the available tools\n"
+    #     "- Do not use any tool unless it is needed for timetable conflicts.\n"
+    #     "- Do not repeat the same courses in your answer when listing them.\n\n"
+    #     f"CONTEXT:\n{inputs['context']}"
+    # )
+    # return f"{system}\n\nQuestion: {inputs['question']}"
     system = (
-        "You are an academic advisor assistant for the University of Ljubljana, "
-        "Faculty of Computer Science. You have access to course syllabi.\n\n"
-        "RESPONSE RULES:\n"
-        "- Answer ONLY from the provided context\n"
-        "- Be concise and match the detail level of the question:\n"
-        "  * If asked for course information/details → always include: course name, ECTS credits, semester\n"
-        "  * If asked for descriptions or recommendations → provide relevant details from syllabus\n"
-        "- If information is not in the context, say 'I don't have enough information'\n"
-        "- When asked about scheduling or conflicts, use the available tools\n"
-        "- Do not repeat the same courses in your answer when listing them.\n\n"
-        f"CONTEXT:\n{inputs['context']}"
+        "Ste akademski svetovalni asistent za Univerzo v Ljubljani, "
+        "Fakulteto za računalništvo in informatiko. Imate dostop do učnih načrtov predmetov.\n\n"
+        "PRAVILA ODGOVARJANJA:\n"
+        "- Odgovarjajte SAMO na podlagi podanega konteksta\n"
+        "- Bodite jedrnati in prilagodite podrobnost odgovora vprašanju:\n"
+        "  * Če vas vprašajo po informacijah/podrobnostih o predmetu → vedno vključite: ime predmeta, število ECTS kreditnih točk, semester\n"
+        "  * Če vas vprašajo po opisu ali priporočilih → navedite ustrezne podrobnosti iz učnega načrta\n"
+        "- Če informacije ni v kontekstu, recite 'Nimam dovolj informacij'\n"
+        "- Ko vas vprašajo o urniku ali konfliktih, uporabite razpoložljiva orodja\n"
+        "- Ne ponavljajte istih predmetov v svojem odgovoru, ko jih naštevate.\n\n"
+        f"KONTEKST:\n{inputs['context']}"
     )
-    return f"{system}\n\nQuestion: {inputs['question']}"
+    return f"{system}\n\nVprašanje: {inputs['question']}"
 
 
 def format_docs(docs):
@@ -261,19 +252,34 @@ def extract_chunk_number(agent, input_query):
     with open("../examples/examples.md", "r", encoding="utf-8") as f:
         examples_string = f.read()
 
+    # system_message = (
+    #     "You extract only numerical information that changes how much context a model needs. "
+    #     "Return an integer only when the user explicitly asks for a count, quantity, or number of items to retrieve. "
+    #     "Ignore incidental digits such as academic year, semester, age, dates, IDs, or class year. "
+    #     "If the number is part of background information and not a request for how many items to answer with, return None. "
+    #     "If the query is asking about a certain number of courses, then ALWAYS return that number. "
+    #     "Do not explain your answer.\n\n"
+    #     f"EXAMPLES:\n{examples_string}"
+    # )
+    # user_message = (
+    #     "Query: "
+    #     f"{input_query}\n\n"
+    #     "Return exactly one token: an integer like 3, or None."
+    # )
+
     system_message = (
-        "You extract only numerical information that changes how much context a model needs. "
-        "Return an integer only when the user explicitly asks for a count, quantity, or number of items to retrieve. "
-        "Ignore incidental digits such as academic year, semester, age, dates, IDs, or class year. "
-        "If the number is part of background information and not a request for how many items to answer with, return None. "
-        "If the query is asking about a certain number of courses, then ALWAYS return that number. "
-        "Do not explain your answer.\n\n"
-        f"EXAMPLES:\n{examples_string}"
+        "Izluščite samo numerične informacije, ki spremenijo, koliko konteksta model potrebuje. "
+        "Vrnite celo število samo, ko uporabnik izrecno vpraša po številu, količini ali koliko elementov naj pridobi. "
+        "Prezrite naključne številke, kot so študijsko leto, semester, starost, datumi, ID-ji ali letnik. "
+        "Če je številka del ozadja in ne zahteva po tem, s koliko elementi naj odgovorim, vrnite None. "
+        "Če poizvedba sprašuje po določenem številu predmetov, VEDNO vrnite to število. "
+        "Ne razlagajte svojega odgovora.\n\n"
+        f"PRIMERI:\n{examples_string}"
     )
     user_message = (
-        "Query: "
+        "Poizvedba: "
         f"{input_query}\n\n"
-        "Return exactly one token: an integer like 3, or None."
+        "Vrnite natanko en žeton: celo število, kot je 3, ali None."
     )
     
     prompt = f"{system_message}\n\n{user_message}"
@@ -315,7 +321,7 @@ if __name__ == "__main__":
     args = parse_arguments()
 
     embeddings = HuggingFaceEmbeddings(
-        model_name="BAAI/bge-large-en-v1.5",
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
         model_kwargs={"device": "cuda" if torch.cuda.is_available() else "cpu"},
     )
 
@@ -330,17 +336,14 @@ if __name__ == "__main__":
             allow_dangerous_deserialization=True,
         )
 
-    # model, tokenizer = load_model(
-    #     "Qwen/Qwen2.5-7B-Instruct",
-    #     args.models_dir
-    # )
 
     llm = build_agent(args.models_dir)
 
-    query = "Kaj pa ostali predmeti ki se ukvarjajo z omrežji? Sigurno ih ima veliko več."
+    query = "Ali mi lahko poves par predmetov vezanih na vgrajene sisteme?"
 
     context_size = extract_chunk_number(llm, query)
-    retriever = get_retriever(vectorstore, context_size, search_type="mmr")
+    # retriever = get_retriever(vectorstore, context_size, search_type="mmr")
+    retriever = get_retriever(vectorstore, context_size)
 
     RAG_PROMPT = RunnableLambda(partial(make_rag_prompt))
     rag_chain = (
