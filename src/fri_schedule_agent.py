@@ -60,7 +60,7 @@ def get_course_schedule(course_query: str) -> str:
         if query in key.lower() or query in course.full_name.lower()
     ]
     if not matches:
-        return f"No course found matching '{course_query}'."
+        return f"No information."
 
     lines = []
     for course in matches:
@@ -89,9 +89,9 @@ def check_overlap(course_a: str, course_b: str) -> str:
     name_b, sessions_b = _find_course(course_b)
 
     if not sessions_a:
-        return f"Course not found: '{course_a}'"
+        return f"No information"
     if not sessions_b:
-        return f"Course not found: '{course_b}'"
+        return f"No information"
 
     overlaps = [
         f"  {sa.day}: {sa.start}–{sa.end} ({name_a}) overlaps {sb.start}–{sb.end} ({name_b})"
@@ -135,7 +135,7 @@ def courses_by_degree(degree: str) -> str:
     List all courses for a given degree programme.
 
     Args:
-        degree: One of: "Bachelor (UN)", "Bachelor (VSS)", "Master", "PhD".
+        degree: One of: "Bachelor (UN)", "Bachelor (VSS)".
     """
     degree_norm = degree.strip()
     matches = [
@@ -152,6 +152,7 @@ TIMETABLE_TOOLS = [
     get_course_schedule,
     check_overlap,
     courses_on_day,
+    courses_by_degree,
 ]
 
 def build_agent(cache_dir):
@@ -206,7 +207,7 @@ def build_agent(cache_dir):
     agent = ToolCallingAgent(
         tools=TIMETABLE_TOOLS,
         model=model,
-        max_steps=5,
+        max_steps=3,
     )
 
     return AgentLLM(agent)

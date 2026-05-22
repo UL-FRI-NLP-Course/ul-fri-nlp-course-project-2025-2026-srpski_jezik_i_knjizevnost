@@ -19,6 +19,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter, MarkdownHeaderTextSplitter
 
 from fri_schedule_agent import build_agent
+from helpers import get_test_queries, get_single_query
 
 input_path = [
     Path("../Računalništvo_in_informatika_UNI(2026-2027).pdf"),
@@ -143,7 +144,7 @@ def embed_documents(source_dir: str, vectorstore_dir: str):
 
 def get_retriever(vectorstore, context_size, search_type="similarity"):
     size_fac = context_size if context_size is not None else 1
-    retrieve_num = size_fac * 3
+    retrieve_num = size_fac * 4
 
     print(f"Retrieving {retrieve_num} chunks")
 
@@ -162,35 +163,36 @@ def get_retriever(vectorstore, context_size, search_type="similarity"):
 
 
 def make_rag_prompt(inputs: dict) -> str:
-    # system = (
-    #     "You are an academic advisor assistant for the University of Ljubljana, "
-    #     "Faculty of Computer Science. You have access to course syllabi.\n\n"
-    #     "RESPONSE RULES:\n"
-    #     "- Answer ONLY from the provided context\n"
-    #     "- Be concise and match the detail level of the question:\n"
-    #     "  * If asked for course information/details → always include: course name, ECTS credits, semester\n"
-    #     "  * If asked for descriptions or recommendations → provide relevant details from syllabus\n"
-    #     "- If information is not in the context, say 'I don't have enough information'\n"
-    #     "- When asked about scheduling or conflicts, use the available tools\n"
-    #     "- Do not use any tool unless it is needed for timetable conflicts.\n"
-    #     "- Do not repeat the same courses in your answer when listing them.\n\n"
-    #     f"CONTEXT:\n{inputs['context']}"
-    # )
-    # return f"{system}\n\nQuestion: {inputs['question']}"
     system = (
-        "Ste akademski svetovalni asistent za Univerzo v Ljubljani, "
-        "Fakulteto za računalništvo in informatiko. Imate dostop do učnih načrtov predmetov.\n\n"
-        "PRAVILA ODGOVARJANJA:\n"
-        "- Odgovarjajte SAMO na podlagi podanega konteksta\n"
-        "- Bodite jedrnati in prilagodite podrobnost odgovora vprašanju:\n"
-        "  * Če vas vprašajo po informacijah/podrobnostih o predmetu → vedno vključite: ime predmeta, število ECTS kreditnih točk, semester\n"
-        "  * Če vas vprašajo po opisu ali priporočilih → navedite ustrezne podrobnosti iz učnega načrta\n"
-        "- Če informacije ni v kontekstu, recite 'Nimam dovolj informacij'\n"
-        "- Ko vas vprašajo o urniku ali konfliktih, uporabite razpoložljiva orodja\n"
-        "- Ne ponavljajte istih predmetov v svojem odgovoru, ko jih naštevate.\n\n"
-        f"KONTEKST:\n{inputs['context']}"
+        "You are an academic advisor assistant for the University of Ljubljana, "
+        "Faculty of Computer Science. You have access to course syllabi.\n\n"
+        "RESPONSE RULES:\n"
+        "- Answer ONLY from the provided context\n"
+        "- Be concise and match the detail level of the question:\n"
+        "  * If asked for course information/details → always include: course name, ECTS credits, semester\n"
+        "  * If asked for descriptions or recommendations → provide relevant details from syllabus\n"
+        "- If information is not in the context, say 'I don't have enough information'\n"
+        "- When asked about scheduling or conflicts, use the available tools\n"    
+        "- Never use tools unless specifically asked about timetable information.\n"
+        "- Do not repeat the same courses in your answer when listing them.\n\n"
+        f"CONTEXT:\n{inputs['context']}"
     )
-    return f"{system}\n\nVprašanje: {inputs['question']}"
+    return f"{system}\n\nQuestion: {inputs['question']}"
+    # system = (
+    #     "Ste akademski svetovalni asistent za Univerzo v Ljubljani, "
+    #     "Fakulteto za računalništvo in informatiko. Imate dostop do učnih načrtov predmetov.\n\n"
+    #     "PRAVILA ODGOVARJANJA:\n"
+    #     "- Odgovarjajte SAMO na podlagi podanega konteksta\n"
+    #     "- Bodite jedrnati in prilagodite podrobnost odgovora vprašanju:\n"
+    #     "  * Če vas vprašajo po informacijah/podrobnostih o predmetu → vedno vključite: ime predmeta, število ECTS kreditnih točk, semester\n"
+    #     "  * Če vas vprašajo po opisu ali priporočilih → navedite ustrezne podrobnosti iz učnega načrta\n"
+    #     "- Če informacije ni v kontekstu, recite 'Nimam dovolj informacij'\n"
+    #     "- Ko vas vprašajo o urniku ali konfliktih, uporabite razpoložljiva orodja\n"
+    #     "- Nikoli ne uporabljaj tool orodja če nisi konkretno vprašan za nekaj povezano za urnik.\n"
+    #     "- Ne ponavljajte istih predmetov v svojem odgovoru, ko jih naštevate.\n\n"
+    #     f"KONTEKST:\n{inputs['context']}"
+    # )
+    # return f"{system}\n\nVprašanje: {inputs['question']}"
 
 
 def format_docs(docs):
@@ -252,35 +254,37 @@ def extract_chunk_number(agent, input_query):
     with open("../examples/examples.md", "r", encoding="utf-8") as f:
         examples_string = f.read()
 
-    # system_message = (
-    #     "You extract only numerical information that changes how much context a model needs. "
-    #     "Return an integer only when the user explicitly asks for a count, quantity, or number of items to retrieve. "
-    #     "Ignore incidental digits such as academic year, semester, age, dates, IDs, or class year. "
-    #     "If the number is part of background information and not a request for how many items to answer with, return None. "
-    #     "If the query is asking about a certain number of courses, then ALWAYS return that number. "
-    #     "Do not explain your answer.\n\n"
-    #     f"EXAMPLES:\n{examples_string}"
-    # )
-    # user_message = (
-    #     "Query: "
-    #     f"{input_query}\n\n"
-    #     "Return exactly one token: an integer like 3, or None."
-    # )
-
     system_message = (
-        "Izluščite samo numerične informacije, ki spremenijo, koliko konteksta model potrebuje. "
-        "Vrnite celo število samo, ko uporabnik izrecno vpraša po številu, količini ali koliko elementov naj pridobi. "
-        "Prezrite naključne številke, kot so študijsko leto, semester, starost, datumi, ID-ji ali letnik. "
-        "Če je številka del ozadja in ne zahteva po tem, s koliko elementi naj odgovorim, vrnite None. "
-        "Če poizvedba sprašuje po določenem številu predmetov, VEDNO vrnite to število. "
-        "Ne razlagajte svojega odgovora.\n\n"
-        f"PRIMERI:\n{examples_string}"
+        "You extract only numerical information that changes how much context a model needs. "
+        "Return an integer only when the user explicitly asks for a count, quantity, or number of items to retrieve. "
+        "Ignore incidental digits such as academic year, semester, age, dates, IDs, or class year. "
+        "If the number is part of background information and not a request for how many items to answer with, return None. "
+        "If the query is asking about a certain number of courses, then ALWAYS return that number. "
+        "If the model requires additioanl context, return a number from 1 to 3.\n"
+        "Do not explain your answer.\n\n"
+        f"EXAMPLES:\n{examples_string}"
     )
     user_message = (
-        "Poizvedba: "
+        "Query: "
         f"{input_query}\n\n"
-        "Vrnite natanko en žeton: celo število, kot je 3, ali None."
+        "Return exactly one token: an integer like 3, or None."
     )
+
+    # system_message = (
+    #     "Izluščite samo numerične informacije, ki spremenijo, koliko konteksta model potrebuje. "
+    #     "Vrnite celo število samo, ko uporabnik izrecno vpraša po številu, količini ali koliko elementov naj pridobi. "
+    #     "Prezrite naključne številke, kot so študijsko leto, semester, starost, datumi, ID-ji ali letnik. "
+    #     "Če je številka del ozadja in ne zahteva po tem, s koliko elementi naj odgovorim, vrnite None. "
+    #     "Če poizvedba sprašuje po določenem številu predmetov, VEDNO vrnite to število. "
+    #     "Če je modelu potrebno več konteksta, vrni število od 1 do 3\n"
+    #     "Ne razlagajte svojega odgovora.\n\n"
+    #     f"PRIMERI:\n{examples_string}"
+    # )
+    # user_message = (
+    #     "Poizvedba: "
+    #     f"{input_query}\n\n"
+    #     "Vrnite natanko en žeton: celo število, kot je 3, ali None."
+    # )
     
     prompt = f"{system_message}\n\n{user_message}"
     result = agent.invoke(prompt)
@@ -293,8 +297,10 @@ def extract_chunk_number(agent, input_query):
     # Validate using Pydantic
     try:
         response = ChunkNumberResponse(chunk_count=chunk_count)
-        print(f"Extracted number: {response.chunk_count}")
-        return response.chunk_count if response.chunk_count is not None else 1
+        extracted = response.chunk_count if response.chunk_count is not None else 1
+        final_count = min(extracted, 3) 
+        print(f"Extracted number: {extracted}, Capped to: {final_count}")
+        return final_count
     except ValueError as e:
         print(f"Validation error: {e}. Using default value of 1.")
         return 1
@@ -311,6 +317,8 @@ def parse_arguments():
     parser.add_argument("--vectorstore-dir", default="../vectorstore/faiss_index", help="FAISS index directory")
     parser.add_argument("--build-index", action="store_true", default=False, help="Rebuild vectorstore before answering")
     return parser.parse_args()
+
+
 
 
 # ─────────────────────────────────────────────
@@ -339,37 +347,65 @@ if __name__ == "__main__":
 
     llm = build_agent(args.models_dir)
 
-    query = "Ali mi lahko poves par predmetov vezanih na vgrajene sisteme?"
-
-    context_size = extract_chunk_number(llm, query)
-    # retriever = get_retriever(vectorstore, context_size, search_type="mmr")
-    retriever = get_retriever(vectorstore, context_size)
-
+    test_queries = get_test_queries("eng")
+    # test_queries=  get_single_query()
     RAG_PROMPT = RunnableLambda(partial(make_rag_prompt))
-    rag_chain = (
-        {
-            "context":  RunnableLambda(lambda x: x["question"]) | retriever | format_docs,
-            "question": RunnableLambda(lambda x: x["question"]),
-            "history":  RunnableLambda(lambda x: x.get("history", [])),
-        }
-        | RAG_PROMPT
-        | llm
-        # | StrOutputParser()
-    )
 
-    input_file = args.input_file
-    print(f"Loading conversation from: {input_file}")
-    chat_history = load_conversation_from_file(input_file)
+    output_file = "test_results.json"
+    
+    # Load existing results if the file exists to append to them
+    if Path(output_file).exists():
+        with open(output_file, "r", encoding="utf-8") as f:
+            try:
+                results = json.load(f)
+            except json.JSONDecodeError:
+                results = {}
+    else:
+        results = {}
 
-    print(f"[Vprašanje]:\n {query}")
+    for category, queries in test_queries.items():
+        print(f"Processing category: {category}")
+        if category not in results:
+            results[category] = []
+            
+        for query in queries:
+            print(f"[Vprašanje]:\n {query}")
 
-    answer = rag_chain.invoke({
-        "question": query,
-        "history": chat_history
-    })
+            context_size = extract_chunk_number(llm, query)
+            retriever = get_retriever(vectorstore, context_size)
 
-    print(f"[Odgovor]:\n {answer}")
+            rag_chain = (
+                {
+                    "context":  RunnableLambda(lambda x: x["question"]) | retriever | format_docs,
+                    "question": RunnableLambda(lambda x: x["question"]),
+                    "history":  RunnableLambda(lambda x: x.get("history", [])),
+                }
+                | RAG_PROMPT
+                | llm
+            )
 
-    chat_history.append({"question": query, "answer": answer})
-    save_conversation_to_file(input_file, chat_history, query, answer)
-    print(f"\nConversation saved to: {input_file}")
+            answer = rag_chain.invoke({
+                "question": query,
+                "history": [] # Independent queries, no history
+            })
+
+            # Check if llm returns an object with .content or just a string
+            if hasattr(answer, "content"):
+                ans_str = answer.content
+            else:
+                ans_str = str(answer)
+
+            results[category].append({
+                "question": query,
+                "answer": ans_str
+            })
+
+            # Save incrementally after generating each answer
+            with open(output_file, "w", encoding="utf-8") as f:
+                json.dump(results, f, ensure_ascii=False, indent=4)
+
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+
+    print(f"\nAll results saved to: {output_file}")
+

@@ -1,10 +1,13 @@
 import re
+import pickle
+from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
 URL = "https://urnik.fri.uni-lj.si/timetable/fri-2025_2026-letni/allocations"
+CACHE_FILE = Path(__file__).parent / "timetable_cache.pkl"
 
 DAYS = {
     "MON": "Monday",
@@ -119,8 +122,10 @@ def fetch_timetable(url: str = URL) -> dict[str, Course]:
       - degree_types  -> ["Bachelor (UN)", "Master", ...] (from hover text)
       - groups        -> ["2_BUN-RI_LV_01", ...]
     """
-    # TODO: API call disabled for now - returning empty timetable
-    return {}
+    if CACHE_FILE.exists():
+        print("Loading timetable from cache...")
+        with open(CACHE_FILE, "rb") as f:
+            return pickle.load(f)
     
     # Retry logic with exponential backoff
     max_retries = 3
@@ -207,6 +212,10 @@ def fetch_timetable(url: str = URL) -> dict[str, Course]:
             degree_types=degree_types,
             groups=groups,
         ))
+
+    print(f"Saving timetable to cache: {CACHE_FILE}")
+    with open(CACHE_FILE, "wb") as f:
+        pickle.dump(courses, f)
 
     return courses
 

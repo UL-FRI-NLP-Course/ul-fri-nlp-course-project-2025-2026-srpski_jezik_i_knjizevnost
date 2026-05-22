@@ -1,0 +1,90 @@
+{
+    "factual": [
+        {
+            "question": "List some courses related to embedded systems.",
+            "answer": "Vgrajeni sistemi"
+        },
+        {
+            "question": "Which courses cover machine learning or artificial intelligence?",
+            "answer": "The following courses cover machine learning or artificial intelligence:\n\n1. **Osnove umetne inteligence** (Foundations of Artificial Intelligence)\n   - Course Name: Osnove umetne inteligence\n   - ECTS Credits: Not specified\n   - Semester: Not specified\n   - Course Description: This course covers basic and commonly used methods in the field of artificial intelligence, including machine learning, knowledge representation, and expert systems. It also involves the use of search and machine learning algorithms on real problems, comparing time and spatial complexity of the taught algorithms, and formulating real-world problems solvable with AI algorithms.\n\n2. **Umetna inteligenca** (Artificial Intelligence)\n   - Course Name: Umetna inteligenca\n   - ECTS Credits: Not specified\n   - Semester: Not specified\n   - Course Description: This course focuses on the application of acquired knowledge in independent work for solving technical and scientific problems in computer and information science. It includes expertise in several techniques and methods used in the field of artificial intelligence, the ability to analyze, synthesize, and anticipate solutions, and the understanding and usage of tools in the field of artificial intelligence."
+        },
+        {
+            "question": "Are there any courses focused on computer networks or networking?",
+            "answer": "Yes, there are courses focused on computer networks or networking at the University of Ljubljana, Faculty of Computer Science. One such course is 'Računalniške komunikacije' (Computer Communications). It covers topics like communication models, network layer services, routing, addressing, network security, and more. The course schedule includes both lectures and lab/tutorials. Here are the details of the schedules:\n\n- Računalniške komunikacije(63209)_P [RK_P]: Monday 11:00–14:00 Lecture by Zoran Bosnić.\n- Računalniške komunikacije(63209)_LV [RK_LV]: Multiple lab/tutorial sessions throughout the week, including Monday 09:00–11:00, 14:00–16:00, Tuesday 10:00–12:00, 14:00–16:00, Wednesday 14:00–16:00, 14:00–16:00, and Thursday 08:00–10:00, 14:00–16:00, 10:00–12:00.\n- Računalniške komunikacije(63708)_P [RK(63708)_P]: Friday 09:00–12:00 Lecture by Mojca Ciglarič.\n- Računalniške komunikacije(63708)_LV [RK(63708)_LV]: Multiple lab/tutorial sessions throughout the week, including Tuesday 14:00–16:00, 10:00–12:00, Wednesday 08:00–10:00, 10:00–12:00, 12:00–14:00, and Thursday 08:00–10:00, 12:00–14:00."
+        },
+        {
+            "question": "Name all courses that involve programming in C or C++.",
+            "answer": "Programski jezik C and Tehnične veščine 2 involve programming in C or C++."
+        },
+        {
+            "question": "Which courses are related to software engineering or software architecture?",
+            "answer": "Tehnologija programske opreme and Implementation and advanced topics in software engineering are related to software engineering or software architecture. The course 'Tehnologija programske opreme' covers activities in the software development life cycle, including system modeling, object-oriented design, creational and structural design patterns, and architectural patterns. 'Implementation and advanced topics in software engineering' includes validation and verification, software evolution, legacy systems, software maintenance, and security engineering."
+        },
+        {
+            "question": "List courses that include database topics.",
+            "answer": "Courses that include database topics are:\n\nPodatkovne baze\n- Course Name: Podatkovne baze\n- ECTS Credits: Not specified in the context\n- Semester: Not specified in the context\n\nOsnove podatkovnih baz\n- Course Name: Osnove podatkovnih baz\n- ECTS Credits: Not specified in the context\n- Semester: Not specified in the context"
+        }
+    ],
+    "comparison": [
+        {
+            "question": "What is the difference between Machine Learning and Deep Learning courses — do they cover similar topics?",
+            "answer": "I don't have enough information to compare Machine Learning and Deep Learning courses directly from the provided context. However, the Machine Learning course covers the following topics: machine learning algorithms, knowledge representation, and planning. It does not mention deep learning specific to neural networks with many layers. To compare Machine Learning and Deep Learning courses, we would need additional information about the Deep Learning course content."
+        },
+        {
+            "question": "How does Artificial Intelligence differ from Computer Vision in terms of content and goals?",
+            "answer": "Artificial Intelligence (AI) and Computer Vision (CV) have different focuses and goals based on the provided context. \n\nArtificial Intelligence (AI) covers a broader range of topics including:\n- Artificial neural networks\n- Problem solving and heuristic search (e.g., A*, RBFS, minimax)\n- Knowledge representation, reasoning, decision support systems\n- Intelligent robots and agents\n- Natural language processing\n- Evolutionary computation\n\nThe goals of AI include understanding the technical boundaries of AI, using search and machine learning algorithms on real-world problems, comparing time and spatial complexity of algorithms, and formulating real-world problems solvable with AI algorithms.\n\nComputer Vision (CV) focuses on specific techniques for processing and interpreting visual information, particularly in the context of image and video analysis, including:\n- Low-level image processing\n- 3D geometry of stereo systems\n- Object detection and recognition\n- Motion extraction in video sequences\n- Mathematical basics for analyzing complex signals\n\nThe goals of Computer Vision include understanding the principles and methods of machine perception, developing competences in low-level image processing and 3D geometry, practicing mathematical basics for analyzing complex signals, and developing object detection and recognition techniques."
+        },
+        {
+            "question": "Are Computer Vision and image processing separate courses, and if so, what distinguishes them?",
+            "answer": "Based on the provided context, it seems that there isn't a clear distinction between Computer Vision and image processing as separate courses. However, we can infer some differences from the course descriptions:\n\n1. **Umetno zaznavanje (Computer Vision)**:\n   - Focuses on advanced concepts in computer vision, including low-level image processing, 3D geometry, object detection, and recognition.\n   - Emphasizes the development of skills in analyzing and extracting information from images and video sequences.\n\n2. **Multimedijski sistemi (Multimedia Systems)**:\n   - Deals with the representation and processing of multimedia data, including text, graphics, animations, images, and video.\n   - Covers aspects like information retrieval and compression standards, which are more related to the handling and processing of multimedia content rather than just image processing.\n\nIn summary, while the courses overlap in terms of image processing, **Umetno zaznavanje** focuses more on advanced computer vision techniques, while **Multimedijski sistemi** focuses on the broader aspects of multimedia data handling and processing."
+        },
+        {
+            "question": "Do courses about embedded systems and microcontroller programming overlaping in topics, or do they cover distinct material?",
+            "answer": "The courses about embedded systems and microcontroller programming do not overlap significantly in their topics, but rather cover distinct material. The 'Vgrajeni sistemi' course focuses on presenting basic approaches in the design of embedded systems, including hardware and software components, microcontrollers, memories, I/O devices, and operating systems. It also covers programming in assembly and C languages, interrupt mechanisms, and real-time programming. On the other hand, the 'Računalniška arhitektura' course provides a broader understanding of computer architecture principles, which can be applied to embedded systems but does not delve deeply into the specific components and programming aspects of embedded systems."
+        },
+        {
+            "question": "Are there any software architecture courses and how do they differ from software engineering courses?",
+            "answer": "There are no explicit software architecture courses, but the software engineering course covers software architecture design patterns, principles, and models as part of its broader curriculum on software development life cycle."
+        }
+    ],
+    "timetable": [
+        {
+            "question": "When are the lab sessions for Embedded Systems?",
+            "answer": "I don't have enough information about the lab session schedule for the Embedded Systems course. The provided context does not include any details about when the lab sessions are held."
+        },
+        {
+            "question": "When does the Machine Learning course have lectures?",
+            "answer": "I don't have enough information about the Machine Learning course in the provided context. The available courses are Računalništvo v praksi I, Računalništvo v praksi II, IZRAČUNLJIVOST IN RAČUNSKA ZAHTEVNOST, and Elektronsko poslovanje. Could you please provide more details about the Machine Learning course or another course you are interested in?"
+        },
+        {
+            "question": "How many hours per week of studz does the Linear Algebra course require?",
+            "answer": "The Linear Algebra course requires 105 hours per semester."
+        },
+        {
+            "question": "Do the lab sessions for Intelligent systems and Machine Perception overlap in the schedule?",
+            "answer": "I don't have enough information to determine if the lab sessions for Intelligent systems and Machine Perception overlap in the schedule. The provided context does not contain specific scheduling details for the labs."
+        },
+        {
+            "question": "Can you give me a list of courses in the first year of the university program?",
+            "answer": "Here is a list of courses in the first year of the university program at the University of Ljubljana, Faculty of Computer Science:\n\n1. Algorithms and Data Structures I (Algoritmi in podatkovne strukture 1)\n   - ECTS credits: 6\n   - Semester: 1st\n   - Lecturer: Jurij Mihelič\n\n2. Physics (Fizika)\n   - ECTS credits: 6\n   - Semester: 1st\n   - Lecturer: Borut Paul Kerševan"
+        },
+        {
+            "question": "Are there any courses with lab sessions on Fridays?",
+            "answer": "I don't have enough information about the specific days of the week when the lab sessions for each course are held. The provided syllabi do not include the schedule details for lab sessions."
+        }
+    ],
+    "complex": [
+        {
+            "question": "Can a student take both Electronic Business and Compilers in the same semester, or do they conflict?",
+            "answer": "I don't have enough information to determine if there is a conflict between taking both Electronic Business and Compilers in the same semester. The provided context does not contain scheduling or semester information for these courses."
+        },
+        {
+            "question": "Is Mathematics a prerequisite for any other course?",
+            "answer": "I don't have enough information to determine if Mathematics is a prerequisite for any other course based on the provided context. The syllabi do not explicitly mention prerequisites."
+        },
+        {
+            "question": "Which courses from the second year are recommended before enrolling in Machine perception?",
+            "answer": "The course 'Robotika in računalniško zaznavanje' (Robotics and Computer Vision) is recommended before enrolling in Machine Perception as it covers related topics such as image processing, 3D geometry, and robotics, which align with the content of the Machine Perception course."
+        }
+    ]
+}
