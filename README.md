@@ -1,3 +1,5 @@
-# Natural language processing course: `Put name of your project here`
+# Natural language processing course: `FRI Course Assistant`
 
-Please, organize README and the whole structure of the repository to be self-contained and reproducible.
+To run llm on test queries use: cd ./src; python main.py ../chat_history.json --build-index
+
+Results will be saved to src/test_results.json
